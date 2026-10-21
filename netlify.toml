@@ -1,0 +1,5 @@
+[build]
+  publish = "static"
+
+# Netlify hosts only the static UI in this starter. Set up the Python API on Render,
+# then configure the frontend API base URL if you want separate hosting.

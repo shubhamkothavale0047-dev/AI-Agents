@@ -1,0 +1,386 @@
+[
+  {
+    "number": 1,
+    "class": "AlexAIAssistant",
+    "category": "Core Intelligence",
+    "responsibility": "Understand user instructions, collect a client brief, and route work."
+  },
+  {
+    "number": 2,
+    "class": "AlexAIDirector",
+    "category": "Core Intelligence",
+    "responsibility": "Plan creative workflows and coordinate agent execution."
+  },
+  {
+    "number": 3,
+    "class": "CreativeIntelligenceAgent",
+    "category": "Core Intelligence",
+    "responsibility": "Generate creative directions and campaign opportunities."
+  },
+  {
+    "number": 4,
+    "class": "ClientBriefAnalyzer",
+    "category": "Research & Planning",
+    "responsibility": "Extract business, product, audience, goal, language, and deliverables from a brief."
+  },
+  {
+    "number": 5,
+    "class": "TrendAnalysisAgent",
+    "category": "Research & Planning",
+    "responsibility": "Identify trend hypotheses and mark current-trend claims for live verification."
+  },
+  {
+    "number": 6,
+    "class": "ResearchAgent",
+    "category": "Research & Planning",
+    "responsibility": "Organize research questions, references, and evidence requirements."
+  },
+  {
+    "number": 7,
+    "class": "DesignRecommendationEngine",
+    "category": "Research & Planning",
+    "responsibility": "Recommend visual approaches suited to the brief."
+  },
+  {
+    "number": 8,
+    "class": "CreativeStrategyAgent",
+    "category": "Research & Planning",
+    "responsibility": "Build a coherent campaign strategy."
+  },
+  {
+    "number": 9,
+    "class": "AudienceIntelligenceAgent",
+    "category": "Research & Planning",
+    "responsibility": "Describe audience needs and likely motivations from supplied information."
+  },
+  {
+    "number": 10,
+    "class": "CampaignPlannerAgent",
+    "category": "Research & Planning",
+    "responsibility": "Plan campaign assets and sequence."
+  },
+  {
+    "number": 11,
+    "class": "ContentCalendarAgent",
+    "category": "Research & Planning",
+    "responsibility": "Draft a content calendar."
+  },
+  {
+    "number": 12,
+    "class": "AIArtDirector",
+    "category": "Graphic Design",
+    "responsibility": "Set visual direction and composition."
+  },
+  {
+    "number": 13,
+    "class": "GraphicDesignerAgent",
+    "category": "Graphic Design",
+    "responsibility": "Prepare design specifications for posters, banners, and social creatives."
+  },
+  {
+    "number": 14,
+    "class": "LayoutAgent",
+    "category": "Graphic Design",
+    "responsibility": "Define hierarchy, grid, spacing, and composition."
+  },
+  {
+    "number": 15,
+    "class": "TypographyAgent",
+    "category": "Graphic Design",
+    "responsibility": "Recommend typography hierarchy."
+  },
+  {
+    "number": 16,
+    "class": "ColorIntelligenceAgent",
+    "category": "Graphic Design",
+    "responsibility": "Recommend color palettes and usage."
+  },
+  {
+    "number": 17,
+    "class": "ImageSelectionAgent",
+    "category": "Graphic Design",
+    "responsibility": "Specify image selection criteria and asset needs."
+  },
+  {
+    "number": 18,
+    "class": "IllustrationAgent",
+    "category": "Graphic Design",
+    "responsibility": "Plan illustration concepts."
+  },
+  {
+    "number": 19,
+    "class": "BackgroundTextureAgent",
+    "category": "Graphic Design",
+    "responsibility": "Specify backgrounds and textures."
+  },
+  {
+    "number": 20,
+    "class": "MockupAgent",
+    "category": "Graphic Design",
+    "responsibility": "Plan product and brand mockups."
+  },
+  {
+    "number": 21,
+    "class": "ThreeDDesignAgent",
+    "category": "Graphic Design",
+    "responsibility": "Plan 3D visual concepts."
+  },
+  {
+    "number": 22,
+    "class": "MarathiTypographyAgent",
+    "category": "Graphic Design",
+    "responsibility": "Flag Devanagari layout, font, and rendering requirements."
+  },
+  {
+    "number": 23,
+    "class": "DesignAdaptationAgent",
+    "category": "Graphic Design",
+    "responsibility": "Adapt design requirements to multiple formats."
+  },
+  {
+    "number": 24,
+    "class": "AdvertisingConceptAgent",
+    "category": "Advertising & Marketing",
+    "responsibility": "Create an ad concept with headline, visual direction, formats, and CTA."
+  },
+  {
+    "number": 25,
+    "class": "AICopywriterAgent",
+    "category": "Advertising & Marketing",
+    "responsibility": "Draft headlines, captions, and advertising copy."
+  },
+  {
+    "number": 26,
+    "class": "BrandStrategistAgent",
+    "category": "Advertising & Marketing",
+    "responsibility": "Define positioning and brand message from supplied facts."
+  },
+  {
+    "number": 27,
+    "class": "BrandConsistencyAgent",
+    "category": "Advertising & Marketing",
+    "responsibility": "Check supplied brand guidelines and identify missing information."
+  },
+  {
+    "number": 28,
+    "class": "SocialMediaManagerAgent",
+    "category": "Advertising & Marketing",
+    "responsibility": "Plan social posts and content formats."
+  },
+  {
+    "number": 29,
+    "class": "AdCampaignAgent",
+    "category": "Advertising & Marketing",
+    "responsibility": "Create campaign variations and rollout suggestions."
+  },
+  {
+    "number": 30,
+    "class": "CTAOptimizationAgent",
+    "category": "Advertising & Marketing",
+    "responsibility": "Suggest calls to action aligned with campaign goals."
+  },
+  {
+    "number": 31,
+    "class": "MarketingAnalystAgent",
+    "category": "Advertising & Marketing",
+    "responsibility": "Define campaign metrics and analysis plan."
+  },
+  {
+    "number": 32,
+    "class": "PricingAssistantAgent",
+    "category": "Advertising & Marketing",
+    "responsibility": "Structure draft service pricing; require owner approval."
+  },
+  {
+    "number": 33,
+    "class": "PromptEngineeringAgent",
+    "category": "AI Image, Video & Motion",
+    "responsibility": "Convert a creative direction into a structured generation prompt."
+  },
+  {
+    "number": 34,
+    "class": "ImageGenerationAgent",
+    "category": "AI Image, Video & Motion",
+    "responsibility": "Prepare an image-generation request; provider execution requires integration."
+  },
+  {
+    "number": 35,
+    "class": "ImageEditingAgent",
+    "category": "AI Image, Video & Motion",
+    "responsibility": "Specify edits to an existing image."
+  },
+  {
+    "number": 36,
+    "class": "ProductPhotographyAgent",
+    "category": "AI Image, Video & Motion",
+    "responsibility": "Plan product photography lighting, composition, and styling."
+  },
+  {
+    "number": 37,
+    "class": "FoodAdvertisingAgent",
+    "category": "AI Image, Video & Motion",
+    "responsibility": "Plan food advertising visuals and appetizing composition."
+  },
+  {
+    "number": 38,
+    "class": "AIVideoDirectorAgent",
+    "category": "AI Image, Video & Motion",
+    "responsibility": "Plan scenes, timing, transitions, and narrative."
+  },
+  {
+    "number": 39,
+    "class": "VideoGenerationAgent",
+    "category": "AI Image, Video & Motion",
+    "responsibility": "Prepare a video-generation job; provider execution requires integration."
+  },
+  {
+    "number": 40,
+    "class": "MotionGraphicsAgent",
+    "category": "AI Image, Video & Motion",
+    "responsibility": "Specify motion graphics and animation behavior."
+  },
+  {
+    "number": 41,
+    "class": "SceneContinuityAgent",
+    "category": "AI Image, Video & Motion",
+    "responsibility": "Check continuity requirements between scenes."
+  },
+  {
+    "number": 42,
+    "class": "VoiceAudioAgent",
+    "category": "AI Image, Video & Motion",
+    "responsibility": "Plan voiceover, music, and audio cues."
+  },
+  {
+    "number": 43,
+    "class": "VideoEditingAgent",
+    "category": "AI Image, Video & Motion",
+    "responsibility": "Plan edit timing, transitions, and final assembly."
+  },
+  {
+    "number": 44,
+    "class": "DesignQAAgent",
+    "category": "Quality, Security & Delivery",
+    "responsibility": "Check deliverables against a supplied checklist."
+  },
+  {
+    "number": 45,
+    "class": "AIDesignCritic",
+    "category": "Quality, Security & Delivery",
+    "responsibility": "Identify possible weaknesses and propose improvements."
+  },
+  {
+    "number": 46,
+    "class": "BrandComplianceAgent",
+    "category": "Quality, Security & Delivery",
+    "responsibility": "Check outputs against supplied brand rules."
+  },
+  {
+    "number": 47,
+    "class": "AssetLicensingAgent",
+    "category": "Quality, Security & Delivery",
+    "responsibility": "Require provenance and license review for assets."
+  },
+  {
+    "number": 48,
+    "class": "SecurityAgent",
+    "category": "Quality, Security & Delivery",
+    "responsibility": "Check security practices and avoid exposing secrets."
+  },
+  {
+    "number": 49,
+    "class": "LocalizationAgent",
+    "category": "Quality, Security & Delivery",
+    "responsibility": "Plan Marathi, Hindi, and English localization."
+  },
+  {
+    "number": 50,
+    "class": "ExportAgent",
+    "category": "Quality, Security & Delivery",
+    "responsibility": "Specify export formats and dimensions."
+  },
+  {
+    "number": 51,
+    "class": "ClientDeliveryAgent",
+    "category": "Quality, Security & Delivery",
+    "responsibility": "Organize delivery package and handoff checklist."
+  },
+  {
+    "number": 52,
+    "class": "RevisionAgent",
+    "category": "Quality, Security & Delivery",
+    "responsibility": "Turn client feedback into a revision checklist."
+  },
+  {
+    "number": 53,
+    "class": "PerformanceAnalyticsAgent",
+    "category": "Quality, Security & Delivery",
+    "responsibility": "Define performance metrics and reporting plan."
+  },
+  {
+    "number": 54,
+    "class": "FeedbackLearningAgent",
+    "category": "Quality, Security & Delivery",
+    "responsibility": "Convert approved feedback into explicit future guidelines."
+  },
+  {
+    "number": 55,
+    "class": "ClientManagementAgent",
+    "category": "Business & System",
+    "responsibility": "Structure client and project metadata."
+  },
+  {
+    "number": 56,
+    "class": "ProjectManagementAgent",
+    "category": "Business & System",
+    "responsibility": "Break work into tasks and checkpoints."
+  },
+  {
+    "number": 57,
+    "class": "WorkflowOrchestratorAgent",
+    "category": "Business & System",
+    "responsibility": "Sequence agent tasks and collect outputs."
+  },
+  {
+    "number": 58,
+    "class": "JobMonitoringAgent",
+    "category": "Business & System",
+    "responsibility": "Report local job state; external worker integration is separate."
+  },
+  {
+    "number": 59,
+    "class": "ErrorRecoveryAgent",
+    "category": "Business & System",
+    "responsibility": "Classify failures and recommend safe recovery actions."
+  },
+  {
+    "number": 60,
+    "class": "AssetPipelineAgent",
+    "category": "Business & System",
+    "responsibility": "Organize asset intake, processing, and output paths."
+  },
+  {
+    "number": 61,
+    "class": "PluginRegistryAgent",
+    "category": "Business & System",
+    "responsibility": "Describe provider/plugin registrations."
+  },
+  {
+    "number": 62,
+    "class": "SystemHealthAgent",
+    "category": "Business & System",
+    "responsibility": "Report local runtime and dependency checks."
+  },
+  {
+    "number": 63,
+    "class": "CostMonitoringAgent",
+    "category": "Business & System",
+    "responsibility": "Define cost tracking fields; real costs require provider usage data."
+  },
+  {
+    "number": 64,
+    "class": "AutonomousCreativeDirector",
+    "category": "Business & System",
+    "responsibility": "Supervise the creative plan and flag decisions needing human approval."
+  }
+]
