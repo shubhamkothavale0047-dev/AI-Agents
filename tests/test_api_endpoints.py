@@ -101,10 +101,30 @@ def test_fastapi_http_endpoints_via_testclient():
     assert "job_id" in camp_data
     jid = camp_data["job_id"]
 
+    # Favicon
+    r_fav = client.get("/favicon.ico")
+    assert r_fav.status_code == 200
+    assert "svg" in r_fav.headers.get("content-type", "")
+
+    # Filtered agents
+    r_filtered_agents = client.get("/api/agents?search=Copywriter")
+    assert r_filtered_agents.status_code == 200
+    assert r_filtered_agents.json()["count"] >= 1
+
+    # Filtered libraries
+    r_filtered_libs = client.get("/api/libraries?search=LangGraph")
+    assert r_filtered_libs.status_code == 200
+    assert r_filtered_libs.json()["count"] >= 1
+
     # Verify download of generated job
     r_dl_json = client.get(f"/api/jobs/{jid}/json")
     assert r_dl_json.status_code == 200
     assert r_dl_json.json()["campaign_name"]
+
+    # Direct get_job JSON endpoint
+    r_get_job = client.get(f"/api/jobs/{jid}")
+    assert r_get_job.status_code == 200
+    assert r_get_job.json()["campaign_name"] == r_dl_json.json()["campaign_name"]
 
     r_dl_md = client.get(f"/api/jobs/{jid}/markdown")
     assert r_dl_md.status_code == 200

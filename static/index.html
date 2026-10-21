@@ -387,11 +387,14 @@ footer a:hover{text-decoration:underline}
               <label for="regular">Regular Price</label>
               <input type="text" id="regular" value="₹220" maxlength="40">
             </div>
+          <div style="display:flex;gap:10px;margin-top:8px;align-items:center">
+            <button type="submit" class="btn" id="runBtn" style="flex:1">
+              <span id="btnText">▶ RUN 64-ROLE WORKFLOW</span>
+            </button>
+            <button type="button" class="dl-btn" style="padding:14px 18px;border-radius:var(--radius-sm);cursor:pointer;font-family:inherit;background:#091626" onclick="clearForm()">
+              Clear
+            </button>
           </div>
-
-          <button type="submit" class="btn" id="runBtn">
-            <span id="btnText">▶ RUN 64-ROLE WORKFLOW</span>
-          </button>
 
           <div class="progress-bar" id="progressBar">
             <div class="progress-fill" id="progressFill"></div>
@@ -625,6 +628,43 @@ function finishProgress() {
   setTimeout(() => { $('progressBar').classList.remove('show'); }, 600);
 }
 
+function clearForm() {
+  $('brief').value = '';
+  $('offer').value = '';
+  $('regular').value = '';
+  $('formStatus').className = '';
+  $('formStatus').textContent = 'Form cleared. Enter a brief or select a preset.';
+  $('brief').focus();
+}
+
+function displayCampaignResult(d) {
+  const c = d.campaign || d;
+  const p = c.poster_copy || {};
+
+  $('resultsTitle').textContent = c.campaign_name || 'Campaign Deliverables';
+  $('poster').textContent =
+    `${p.brand || 'BRAND'}\n\n${p.headline || 'SPECIAL OFFER'}\n${p.product || 'Featured Offering'}\n` +
+    `Offer: ${p.offer_price || '—'}  ·  Regular: ${p.regular_price || '—'}\n` +
+    `${p.supporting_line || ''}\n\nCTA: ${p.cta || 'ORDER NOW'}`;
+  $('caption').textContent = c.instagram_caption || '';
+  $('whatsapp').textContent = c.whatsapp_status || '';
+  $('stories').textContent = (c.instagram_story_sequence || []).map(x => `FRAME ${x.frame}\n${x.copy}`).join('\n\n');
+  $('creative').textContent =
+    `Palette: ${(c.creative_direction?.palette || []).join(', ')}\n` +
+    `Hero Visual: ${c.creative_direction?.hero || 'N/A'}\n\nFormats:\n` +
+    Object.entries(c.creative_direction?.formats || {}).map(([k,v]) => `  • ${k}: ${v}`).join('\n');
+  $('qa').textContent = (c.pre_publish_checks || []).map(x => '• ' + x).join('\n');
+
+  $('jobMeta').textContent =
+    `JOB ${d.job_id || 'RUN'} · ${d.completed_agents || 64}/${d.registered_agents || 64} ROLES COMPLETED · MODE: ${d.mode || 'LOCAL'}`;
+  $('downloadLinks').innerHTML =
+    `<a class="dl-btn" href="${d.downloads?.markdown || `/api/jobs/${d.job_id}/markdown`}" download>📥 Markdown</a>
+     <a class="dl-btn" href="${d.downloads?.json || `/api/jobs/${d.job_id}/json`}" download>📥 JSON</a>`;
+
+  $('results').classList.add('show');
+  $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 // ── Form Submission ──────────────────────────────────────────────────────────
 $('campaignForm').addEventListener('submit', async e => {
   e.preventDefault();
@@ -651,33 +691,9 @@ $('campaignForm').addEventListener('submit', async e => {
     if (!res.ok) throw new Error(d.detail || 'Workflow execution failed');
 
     finishProgress();
-    const c = d.campaign;
-    const p = c.poster_copy;
-
-    $('resultsTitle').textContent = c.campaign_name || 'Campaign Deliverables';
-    $('poster').textContent =
-      `${p.brand}\n\n${p.headline}\n${p.product}\n` +
-      `Offer: ${p.offer_price}  ·  Regular: ${p.regular_price}\n` +
-      `${p.supporting_line}\n\nCTA: ${p.cta}`;
-    $('caption').textContent = c.instagram_caption;
-    $('whatsapp').textContent = c.whatsapp_status;
-    $('stories').textContent = (c.instagram_story_sequence || []).map(x => `FRAME ${x.frame}\n${x.copy}`).join('\n\n');
-    $('creative').textContent =
-      `Palette: ${(c.creative_direction.palette || []).join(', ')}\n` +
-      `Hero Visual: ${c.creative_direction.hero}\n\nFormats:\n` +
-      Object.entries(c.creative_direction.formats || {}).map(([k,v]) => `  • ${k}: ${v}`).join('\n');
-    $('qa').textContent = (c.pre_publish_checks || []).map(x => '• ' + x).join('\n');
-
-    $('jobMeta').textContent =
-      `JOB ${d.job_id} · ${d.completed_agents}/${d.registered_agents} ROLES COMPLETED · MODE: ${d.mode}`;
-    $('downloadLinks').innerHTML =
-      `<a class="dl-btn" href="${d.downloads.markdown}" download>📥 Markdown</a>
-       <a class="dl-btn" href="${d.downloads.json}" download>📥 JSON</a>`;
-
-    $('results').classList.add('show');
+    displayCampaignResult(d);
     status.className = 'success';
     status.textContent = `✓ Workflow succeeded — job ${d.job_id} generated.`;
-    $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
     fetchJobs();
 
   } catch (err) {
@@ -837,6 +853,7 @@ async function fetchJobs() {
         <span class="job-name">${esc(j.campaign_name || 'Campaign Job')}</span>
         <span class="job-badge ${j.status}">${esc(j.status)}</span>
         <div class="job-links">
+          <button type="button" class="dl-btn" style="padding:5px 10px;cursor:pointer;font-family:inherit" onclick="loadJobIntoView('${esc(j.job_id)}')">Inspect</button>
           <a href="/api/jobs/${esc(j.job_id)}/markdown" download>Markdown</a>
           <a href="/api/jobs/${esc(j.job_id)}/json" download>JSON</a>
         </div>
@@ -847,6 +864,28 @@ async function fetchJobs() {
   }
 }
 fetchJobs();
+
+async function loadJobIntoView(jobId) {
+  try {
+    const res = await fetch(`/api/jobs/${jobId}/json`);
+    if (!res.ok) throw new Error('Could not load job JSON');
+    const data = await res.json();
+    switchTab('studio');
+    displayCampaignResult({
+      campaign: data,
+      job_id: jobId,
+      completed_agents: data.execution?.agent_roles_completed || 64,
+      registered_agents: data.execution?.registered_agent_roles || 64,
+      mode: data.execution?.mode || 'STORED_RUN',
+      downloads: {
+        markdown: `/api/jobs/${jobId}/markdown`,
+        json: `/api/jobs/${jobId}/json`
+      }
+    });
+  } catch (err) {
+    alert('Failed to load job details: ' + err.message);
+  }
+}
 
 function esc(s) {
   return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');

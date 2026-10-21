@@ -1,13 +1,13 @@
-"""ALEX DESIGN STUDIO OS — Production FastAPI application."""
 from pathlib import Path
 from uuid import uuid4
 import json, os, logging, re
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from pydantic import BaseModel, Field
@@ -28,6 +28,16 @@ OUT = Path(os.getenv("ALEX_OUTPUT_DIR", str(BASE / "outputs")))
 OUT.mkdir(parents=True, exist_ok=True)
 SAFE_JOB_ID_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
+# ── Optional PostgreSQL Store ────────────────────────────────────────────────
+pg_store = None
+if os.getenv("DATABASE_URL"):
+    try:
+        from alex_design_studio_os.postgres_store import PostgresJobStore
+        pg_store = PostgresJobStore()
+        logger.info("PostgreSQL storage enabled via DATABASE_URL")
+    except Exception as exc:
+        logger.warning("PostgreSQL setup deferred or failed: %s", exc)
+
 # ── Lifespan (startup / shutdown hooks) ──────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -35,6 +45,12 @@ async def lifespan(app: FastAPI):
     logger.info("Output directory: %s", OUT)
     agents = create_all_agents()
     logger.info("Registered agent roles: %d", len(agents))
+    if pg_store:
+        try:
+            pg_store.initialize()
+            logger.info("PostgreSQL alex_jobs schema ready.")
+        except Exception as exc:
+            logger.warning("PostgreSQL schema initialization skipped: %s", exc)
     yield
     logger.info("ALEX DESIGN STUDIO OS shutting down.")
 
@@ -52,10 +68,12 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_methods=["GET", "POST"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
@@ -69,6 +87,16 @@ class CampaignRequest(BaseModel):
     regular_price: str = Field(default="₹220", max_length=40, description="Regular / MRP price")
 
 # ── Routes ────────────────────────────────────────────────────────────────────
+@app.get("/favicon.ico", include_in_schema=False)
+def favicon():
+    svg = (
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">'
+        '<rect width="100" height="100" rx="22" fill="#050b14"/>'
+        '<text x="50" y="68" font-size="54" font-weight="900" font-family="sans-serif" '
+        'fill="#00e5ff" text-anchor="middle">A</text></svg>'
+    )
+    return Response(content=svg, media_type="image/svg+xml")
+
 @app.get("/health", tags=["System"], summary="Health check")
 def health():
     agents = create_all_agents()
@@ -79,11 +107,12 @@ def health():
         "registered_roles": len(agents),
         "execution_mode": "local-template-orchestration",
         "live_llm_calls": 0,
+        "storage": "postgresql (active)" if pg_store else "filesystem (local)",
         "output_dir": str(OUT),
     }
 
 @app.get("/api/agents", tags=["Agents"], summary="List all registered agent roles")
-def agents():
+def agents(category: str | None = None, search: str | None = None):
     registry = create_all_agents()
     rows = [
         {
@@ -96,12 +125,26 @@ def agents():
         }
         for key, agent in registry.items()
     ]
+    if category and category.upper() != "ALL":
+        rows = [r for r in rows if r["category"].lower() == category.lower()]
+    if search:
+        q = search.lower()
+        rows = [r for r in rows if q in r["name"].lower() or q in r["key"].lower() or q in r["responsibility"].lower()]
     return {"count": len(rows), "agents": rows}
 
 @app.get("/api/libraries", tags=["Library Stack"], summary="List optional ALEX ASI library candidates")
-def libraries():
+def libraries(category: str | None = None, search: str | None = None):
     """Return candidate libraries; entries are not automatically installed or production-approved."""
-    return get_library_registry()
+    data = get_library_registry()
+    libs = data.get("libraries", [])
+    if category and category.upper() != "ALL":
+        libs = [l for l in libs if l.get("category", "").lower() == category.lower()]
+    if search:
+        q = search.lower()
+        libs = [l for l in libs if q in l.get("name", "").lower() or q in l.get("notes", "").lower()]
+    data["libraries"] = libs
+    data["count"] = len(libs)
+    return data
 
 @app.post("/api/campaign", tags=["Campaign"], summary="Run a full 64-role campaign workflow")
 def campaign(req: CampaignRequest):
@@ -120,6 +163,20 @@ def campaign(req: CampaignRequest):
         json_path.write_text(json.dumps(campaign_data, ensure_ascii=False, indent=2), encoding="utf-8")
         md_path.write_text(Path(result["markdown_path"]).read_text(encoding="utf-8"), encoding="utf-8")
         exec_info = campaign_data["execution"]
+
+        if pg_store:
+            try:
+                pg_job = pg_store.create(req.brief)
+                pg_store.set_running(pg_job["job_id"])
+                pg_store.succeed(pg_job["job_id"], campaign_data)
+                logger.info("Synced campaign to PostgreSQL job: %s", pg_job["job_id"])
+            except Exception as pg_err:
+                logger.warning("PostgreSQL job sync warning: %s", pg_err)
+
+        logger.info(
+            "Campaign complete | job=%s completed=%d failed=%d",
+            cid, exec_info["agent_roles_completed"], len(exec_info["agent_roles_failed"]),
+        )
         logger.info(
             "Campaign complete | job=%s completed=%d failed=%d",
             cid, exec_info["agent_roles_completed"], len(exec_info["agent_roles_failed"]),
@@ -181,6 +238,11 @@ def list_jobs():
         except Exception:
             pass
     return {"count": len(jobs), "jobs": jobs}
+
+@app.get("/api/jobs/{job_id}", tags=["Jobs"], summary="Get job JSON result")
+def get_job(job_id: str):
+    """Retrieve full JSON result for a completed campaign job."""
+    return get_json(job_id)
 
 @app.get("/api/jobs/{job_id}/json", tags=["Jobs"], summary="Download job result as JSON")
 def get_json(job_id: str):
