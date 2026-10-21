@@ -1,6 +1,41 @@
+# Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
 .venv/
+venv/
+env/
+
+# Environment files
 .env
+.env.*
+!.env.example
+
+# App outputs (keep the placeholder)
 outputs/*
 !outputs/.gitkeep
+
+# SQLite local DB
+data/
+*.sqlite3
+*.db
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
