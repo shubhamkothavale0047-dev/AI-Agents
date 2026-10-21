@@ -1,156 +1,444 @@
-# ALEX DESIGN STUDIO OS — 64 Agent Starter Kit v0.2
+# ALEX DESIGN STUDIO OS
 
-A runnable local scaffold for 64 named agent roles, plus an **optional one-call OpenAI Responses API integration**.
+### AI-Powered Creative Automation & Multi-Agent Orchestration Platform
 
-## Run in Termux (Android)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776ab?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Render](https://img.shields.io/badge/Deploy-Render-46E3B7?style=flat-square&logo=render&logoColor=white)](https://render.com)
+[![License](https://img.shields.io/badge/License-MIT-gold?style=flat-square)](LICENSE)
 
-1. Install Python if needed: `pkg install python`
-2. Extract this ZIP, then enter the folder `alex_design_studio_os_agents_64`.
-3. Run the offline demo:
-   `python -m alex_design_studio_os`
-4. Run the local verification:
-   `python -m alex_design_studio_os.self_test`
+---
 
-## Enable the OpenAI API mode
+## Overview
 
-You need your own valid API key and API billing/credits. Never paste the key into chat or commit it to GitHub.
+**ALEX DESIGN STUDIO OS** is an AI-powered creative automation platform that streamlines graphic design workflows, advertising campaign creation, content generation, and creative project management through a centralized web-based interface.
 
-In the same Termux session, set the key:
-`export OPENAI_API_KEY='your-key-here'`
+The platform uses a **64-role agent architecture** to organize creative tasks into specialized stages — brief analysis, research, brand strategy, copywriting, design planning, quality assurance, and final delivery. A **dependency-aware orchestration engine** coordinates the roles and passes outputs between workflow stages in the correct order.
 
-Optional model override:
-`export OPENAI_MODEL='gpt-4.1-mini'`
+The system transforms a simple project brief into structured creative deliverables: Instagram campaign copy, promotional poster text, WhatsApp Status content, social media story sequences, and downloadable campaign reports in JSON and Markdown formats.
 
-Then run:
-`python -m alex_design_studio_os --mode openai`
+> **Transparency note:** The 64 roles represent specialized workflow responsibilities. They are not 64 independent AI models. Live AI generation and production infrastructure depend on the corresponding integrations being configured and verified.
 
-The generated strategy report is saved in `outputs/`. The key is read from the environment and is not written to the report.
+---
 
-## What is implemented
+## Live Demo & API
 
-- 64 named agent-role classes and registry.
-- Local template pipeline works offline with standard library only.
-- Optional OpenAI Responses API client using standard-library HTTP.
-- OpenAI mode creates a structured creative-strategy pack and saves a JSON report.
-- Clear handling for missing API key, HTTP errors, connection errors, and empty responses.
+| Link | Description |
+|------|-------------|
+| 🌐 Web UI | `https://your-app.onrender.com` |
+| 📖 Swagger Docs | `https://your-app.onrender.com/docs` |
+| 📘 ReDoc | `https://your-app.onrender.com/redoc` |
+| 💚 Health Check | `https://your-app.onrender.com/health` |
+| 🤖 Agents JSON | `https://your-app.onrender.com/api/agents` |
 
-## Important scope limits
+---
 
-- The 64 roles are not 64 independent models; most roles use local templates.
-- OpenAI mode currently makes **one model call** for a strategy pack. It does not invoke all 64 agents as separate model calls.
-- No live web research, image/video generation, PostgreSQL, Redis/Celery, or deployment is included.
-- The package's tests can verify local code paths, but cannot verify your API key, billing, network, or Android device until you run it there.
-- Review all output for accuracy, licensing, and client suitability before delivery.
+## Table of Contents
 
+1. [Project Description](#overview)
+2. [Key Features](#key-features)
+3. [Architecture](#architecture)
+4. [Use Cases](#use-cases)
+5. [Technology Stack](#technology-stack)
+6. [Quick Start](#quick-start)
+7. [API Reference](#api-reference)
+8. [CLI Usage](#cli-usage)
+9. [Environment Variables](#environment-variables)
+10. [Deployment](#deployment)
+11. [Version History](#version-history)
+12. [Future Scope](#future-scope)
+13. [Target Users](#target-users)
 
-## Test one live AI agent (real API call)
+---
 
-This test calls the OpenAI API for the `CreativeIntelligenceAgent` and saves a JSON report. It is **not** executed during package self-tests because it requires your own API key and may incur API usage charges.
+## Key Features
 
-In Termux, from this folder:
-`export OPENAI_API_KEY='your-key-here'`
-`python -m alex_design_studio_os.single_agent_live_test`
+| # | Feature | Description |
+|---|---------|-------------|
+| 1 | **64-Agent Role Architecture** | Organizes creative and operational responsibilities into specialized named roles |
+| 2 | **Dependency-Aware Orchestration** | Runs workflow stages in topological order, passing upstream outputs to downstream roles |
+| 3 | **Campaign Generation** | Produces structured advertising content from a plain-text project brief |
+| 4 | **Social Media Content** | Instagram captions, poster copy, WhatsApp Status messages, Story sequences |
+| 5 | **Report Export** | Campaign outputs in Markdown and JSON formats, downloadable from the UI |
+| 6 | **Web Dashboard** | Responsive single-page interface for campaign input, live status, and output review |
+| 7 | **REST API** | FastAPI backend with full OpenAPI / Swagger documentation |
+| 8 | **Jobs History** | View, browse, and download past campaign runs |
+| 9 | **OpenAI Mode** | Optional live AI generation via OpenAI Responses API (requires API key) |
+| 10 | **PostgreSQL Support** | Optional persistent job store for production history |
 
-Optional:
-`export OPENAI_MODEL='gpt-4.1-mini'`
+---
 
-Do not paste your API key into chat or commit it to source control. A `PASS` is shown only after a real API response contains non-empty model output. This tests one agent path, not all 64 agents.
+## Architecture
 
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Web Dashboard (UI)                       │
+│              static/index.html  ←→  FastAPI (app.py)         │
+└────────────────────────────┬────────────────────────────────┘
+                             │ POST /api/campaign
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│              campaign_workflow.py                            │
+│         run_advertising_campaign(brief, ...)                 │
+└────────────────────────────┬────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│              orchestrator.py                                 │
+│    Builds dependency graph → topological sort →             │
+│    Runs all 64 roles in order, passing upstream context     │
+└────────────────────────────┬────────────────────────────────┘
+                             │
+         ┌───────────────────┼───────────────────┐
+         ▼                   ▼                   ▼
+   [Stage 1]           [Stage 2–7]          [Stage 8]
+  Brief & Strategy    Research, Brand,     QA & Delivery
+  Research, etc.      Copy, Design,        Compliance,
+                      Media, Eng.          Export
+         │                   │                   │
+         └───────────────────┴───────────────────┘
+                             │
+                             ▼
+              ┌──────────────────────────┐
+              │  outputs/  (JSON + MD)   │
+              │  Postgres (optional)     │
+              └──────────────────────────┘
+```
 
-## v0.4 — Durable local jobs and status
+### The 8 Workflow Stages
 
-This release adds a SQLite job store (standard library) for a reliable Android-friendly local development step before PostgreSQL/Redis/Celery.
+| Stage | Roles |
+|-------|-------|
+| **1. Brief & Strategy** | AlexAIAssistant, AlexAIDirector, CreativeIntelligenceAgent, ClientBriefAnalyzer, CreativeStrategyAgent, CampaignPlannerAgent, ProjectManagementAgent |
+| **2. Research** | TrendAnalysisAgent, ResearchAgent, AudienceIntelligenceAgent, MarketingAnalystAgent, PerformanceAnalyticsAgent, FeedbackLearningAgent |
+| **3. Brand** | BrandStrategistAgent, BrandConsistencyAgent, ColorIntelligenceAgent, TypographyAgent, MarathiTypographyAgent, LocalizationAgent |
+| **4. Content** | AICopywriterAgent, AdvertisingConceptAgent, SocialMediaManagerAgent, CTAOptimizationAgent, ContentCalendarAgent, PricingAssistantAgent, PromptEngineeringAgent |
+| **5. Design** | AIArtDirector, GraphicDesignerAgent, DesignRecommendationEngine, LayoutAgent, ImageSelectionAgent, IllustrationAgent, BackgroundTextureAgent, MockupAgent, ThreeDDesignAgent, DesignAdaptationAgent, AutonomousCreativeDirector |
+| **6. Media** | ImageGenerationAgent, ImageEditingAgent, ProductPhotographyAgent, FoodAdvertisingAgent, AIVideoDirectorAgent, VideoGenerationAgent, MotionGraphicsAgent, SceneContinuityAgent, VoiceAudioAgent, VideoEditingAgent |
+| **7. Engineering** | AssetPipelineAgent, PluginRegistryAgent, SecurityAgent, SystemHealthAgent, CostMonitoringAgent, WorkflowOrchestratorAgent, JobMonitoringAgent, ErrorRecoveryAgent |
+| **8. QA & Delivery** | DesignQAAgent, AIDesignCritic, BrandComplianceAgent, AssetLicensingAgent, ExportAgent, ClientDeliveryAgent, RevisionAgent, ClientManagementAgent |
 
-### Create a job
-`python -m alex_design_studio_os.jobs_cli create --brief "Pune dairy farm Instagram campaign"`
+---
 
-Copy the returned `job_id`, then run:
-`python -m alex_design_studio_os.jobs_cli run --job-id job_xxxxxxxxxxxx`
+## Use Cases
 
-Check status:
-`python -m alex_design_studio_os.jobs_cli status --job-id job_xxxxxxxxxxxx`
+### 🍗 Social Media Advertising
+A business provides its product name, offer, audience, and campaign objective. The system organizes the brief into a campaign plan and generates promotional copy for social media.
 
-List recent jobs:
-`python -m alex_design_studio_os.jobs_cli list`
+**Example:** *Bappu's Biryani — premium Instagram offer campaign*
 
-Run lifecycle test:
-`python -m alex_design_studio_os.job_store_self_test`
+**Output:** Campaign headline, offer copy, Instagram caption, WhatsApp Status content, and Story sequence.
 
-The local runner is synchronous: the job status is durable, but this is not yet a Redis/Celery background worker or a live WebSocket status feed. PostgreSQL integration is not included in this release.
+---
 
+### 🎨 Graphic Design Planning
+A designer enters a poster or banner brief. The system structures the creative direction, including visual style, colour palette, typography guidance, layout suggestions, and required copy.
 
-## v0.5 — Optional PostgreSQL job store
+**Output:** A design brief and production-ready creative specifications. Actual image rendering requires an image-generation or design-tool integration.
 
-Added `PostgresJobStore`, using PostgreSQL JSONB for job results and a status constraint.
+---
 
-### Configure
-Install optional driver:
-`pip install 'psycopg[binary]>=3.1'`
+### 🏪 Small Business Marketing
+Local businesses can prepare promotional campaigns for restaurants, salons, retail stores, and service providers.
 
-Set your connection string privately in Termux:
-`export DATABASE_URL='postgresql://USER:PASSWORD@HOST:5432/DBNAME'`
+**Output:** Promotional messaging, campaign variations, calls to action, and reusable marketing content.
 
-Then a Python entry point can initialize the schema:
-`python -c "from alex_design_studio_os.postgres_store import PostgresJobStore; PostgresJobStore().initialize(); print('Schema initialized')"`
+---
 
-Do not put real credentials in source code or share them in chat. A successful schema initialization message only confirms that your configured database was reachable and accepted the schema.
+### 📱 Instagram & WhatsApp Content
+Content creators can convert one campaign brief into several platform-specific formats.
 
-Offline adapter checks:
-`python -m alex_design_studio_os.postgres_self_test`
+**Output:** Instagram captions, Story frames, short promotional messages, and campaign hashtags.
 
-The SQLite CLI remains the tested end-to-end job runner. This release adds the PostgreSQL storage adapter but does not yet switch the CLI runner to PostgreSQL or add Redis/Celery.
+---
 
+### 🏢 Creative Agency Workflow
+A design studio can use the platform as a structured starting point for campaign intake, task organization, copy development, quality checks, and deliverable preparation.
 
-## v0.6 — Advertising campaign workflow across all 64 registered roles
+**Output:** A standardized campaign workflow and downloadable reports for review.
 
-Run in the extracted project directory:
-`python -m alex_design_studio_os.campaign_self_test`
+---
 
-Run a campaign:
-`python -c "from alex_design_studio_os.campaign_workflow import run_advertising_campaign; r=run_advertising_campaign("Bappu's Biryani — premium Instagram offer poster"); print(r['markdown_path']); print(r['json_path'])"`
+### 🔬 AI Agent Orchestration Research
+Developers and students can explore multi-agent architecture, dependency graphs, role-based task execution, output passing, workflow validation, and API integration.
 
-This workflow calls each of the 64 registered role classes once in local template mode and records their outputs alongside a usable campaign copy pack. It makes zero separate LLM calls, does not perform live trend research, and does not generate image/video assets itself. Confirm all prices and offer terms before publishing.
+**Output:** An extensible development platform for experimenting with agent orchestration.
 
-## v0.7 — Integrated OS entry point
+---
 
-The advertising campaign workflow is now integrated into the main CLI alongside the existing core design workflow.
+### 🎓 Academic & Portfolio Projects
+Students can demonstrate API development, workflow automation, testing, responsive dashboards, and deployment configuration in a portfolio.
 
-Run the Bappu's Biryani campaign (local template mode, all 64 registered roles called once):
-`python -m alex_design_studio_os --workflow advertising --brief "Bappu's Biryani — premium Instagram offer poster"`
+**Output:** A runnable project scaffold with documented implementation.
 
-Optional offer values and output directory:
-`python -m alex_design_studio_os --workflow advertising --brief "Bappu's Biryani — premium Instagram offer poster" --offer-price "₹149" --regular-price "₹220" --output-dir outputs`
+---
 
-Run the core workflow as before:
-`python -m alex_design_studio_os --workflow core --mode local --brief "Pune dairy farm Instagram campaign"`
+## Technology Stack
 
-The advertising CLI currently runs all 64 registered roles in local template mode; it does not make 64 independent LLM calls, perform live research, or generate image/video files. Prices must be confirmed before publishing. PostgreSQL remains an optional adapter and is not wired into the CLI job runner; Redis/Celery and Android-device execution are not verified.
+| Layer | Technology |
+|-------|-----------|
+| **Backend** | Python 3.11+, FastAPI, Uvicorn |
+| **Frontend** | HTML5, Vanilla CSS, JavaScript (no framework) |
+| **Agent Architecture** | 64 specialized workflow roles, custom dependency graph |
+| **Orchestration** | Topological-sort dependency-aware execution engine |
+| **Output Formats** | JSON, Markdown |
+| **Optional AI** | OpenAI Responses API (`gpt-4.1-mini` or custom model) |
+| **Optional DB** | PostgreSQL via psycopg v3 |
+| **Deployment** | Render (backend + UI), Netlify (static frontend only) |
+| **Future** | Redis, Celery, authentication, monitoring, image/video generation |
 
-## v0.8 — 64-role contract validation
+---
 
-Run a repeatable interface check for every registered role:
+## Quick Start
+
+### Prerequisites
+- Python 3.11 or higher
+- pip
+
+### Local Setup
 
 ```bash
+# 1. Clone the repository
+git clone https://github.com/shubhamkothavale0047-dev/AI-Agents.git
+cd AI-Agents
+
+# 2. Create virtual environment
+python -m venv .venv
+
+# Windows
+.venv\Scripts\activate
+
+# macOS / Linux
+source .venv/bin/activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Configure environment (optional)
+cp .env.example .env
+# Edit .env as needed
+
+# 5. Start the server
+uvicorn app:app --reload --host 127.0.0.1 --port 8000
+```
+
+Open **http://127.0.0.1:8000** in your browser.
+
+---
+
+## API Reference
+
+### `GET /health`
+System health check and role count.
+
+```json
+{
+  "status": "ok",
+  "app": "ALEX DESIGN STUDIO OS",
+  "version": "1.0.0",
+  "registered_roles": 64,
+  "execution_mode": "local-template-orchestration",
+  "live_llm_calls": 0
+}
+```
+
+### `GET /api/agents`
+List all 64 registered agent roles with category and responsibility.
+
+### `POST /api/campaign`
+Run the full 64-role campaign workflow.
+
+**Request body:**
+```json
+{
+  "brief": "Bappu's Biryani — premium Instagram offer poster",
+  "offer_price": "₹149",
+  "regular_price": "₹220"
+}
+```
+
+**Response:** Full campaign object including poster copy, Instagram caption, WhatsApp Status, Story sequence, creative direction, QA checklist, and download links.
+
+### `GET /api/jobs`
+List all recent completed job runs.
+
+### `GET /api/jobs/{job_id}/json`
+Download a job's full output as a JSON file.
+
+### `GET /api/jobs/{job_id}/markdown`
+Download a job's campaign report as a Markdown file.
+
+---
+
+## CLI Usage
+
+```bash
+# Run the advertising campaign (local mode, all 64 roles)
+python -m alex_design_studio_os --workflow advertising \
+  --brief "Bappu's Biryani — premium Instagram offer poster" \
+  --offer-price "₹149" --regular-price "₹220"
+
+# Run the core design workflow
+python -m alex_design_studio_os --workflow core --mode local \
+  --brief "Pune dairy farm Instagram campaign"
+
+# Run with OpenAI (requires OPENAI_API_KEY)
+export OPENAI_API_KEY='sk-...'
+python -m alex_design_studio_os --mode openai \
+  --brief "Organic skincare brand campaign"
+
+# SQLite job store CLI
+python -m alex_design_studio_os.jobs_cli create --brief "My campaign"
+python -m alex_design_studio_os.jobs_cli run   --job-id job_xxxxxxxxxxxx
+python -m alex_design_studio_os.jobs_cli status --job-id job_xxxxxxxxxxxx
+python -m alex_design_studio_os.jobs_cli list
+
+# Self tests
+python -m alex_design_studio_os.self_test
 python -m alex_design_studio_os.agent_validation
-python -m alex_design_studio_os.agent_validation_self_test
-```
-
-This verifies that all 64 registered roles can be instantiated, accept the supplied brief, and return the documented local result fields. It intentionally does **not** claim independent LLM reasoning or live external-service integration.
-
-## v0.9 — Dependency-aware 64-role orchestration
-
-Run the dependency-graph integration test:
-
-```bash
 python -m alex_design_studio_os.orchestrator_self_test
+python -m alex_design_studio_os.campaign_self_test
 ```
 
-Run the advertising campaign end-to-end in local mode:
+---
+
+## Environment Variables
+
+Copy `.env.example` to `.env` and configure:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `ALEX_OUTPUT_DIR` | `./outputs` | Directory for generated campaign files |
+| `DATABASE_URL` | *(unset)* | PostgreSQL connection string (optional) |
+| `OPENAI_API_KEY` | *(unset)* | OpenAI API key for live AI mode (optional) |
+| `OPENAI_MODEL` | `gpt-4.1-mini` | OpenAI model override (optional) |
+| `PYTHON_VERSION` | `3.12.8` | Python version hint for cloud platforms |
+
+> ⚠️ Never commit your API key or database credentials to source control.
+
+---
+
+## Deployment
+
+### Render (Recommended — Backend + UI)
+
+| Setting | Value |
+|---------|-------|
+| **Build Command** | `pip install -r requirements.txt` |
+| **Start Command** | `uvicorn app:app --host 0.0.0.0 --port $PORT` |
+| **Runtime** | Python 3 |
+| **Plan** | Free |
+
+**Environment variables to add in Render dashboard:**
+- `PYTHON_VERSION` = `3.12.8`
+- `ALEX_OUTPUT_DIR` = `/tmp/alex_outputs`
+- `OPENAI_API_KEY` = *(your key, if using OpenAI mode)*
+
+Alternatively, connect the repo and use **New + → Blueprint** — Render auto-detects `render.yaml`.
+
+> **Note:** Render's free tier sleeps after 15 minutes. Files on disk are ephemeral — download reports after each run, or connect PostgreSQL for persistence.
+
+### PostgreSQL (Persistent Job History)
 
 ```bash
-python -m alex_design_studio_os --workflow advertising --brief "Bappu's Biryani — premium Instagram offer poster"
+# Initialize schema
+python -c "
+from alex_design_studio_os.postgres_store import PostgresJobStore
+PostgresJobStore().initialize()
+print('Schema initialized')
+"
 ```
 
-The campaign workflow now schedules all 64 registered roles in dependency order, passes upstream summaries into downstream roles, records per-role status/timing/errors and writes JSON + Markdown reports. To inspect detailed data-flow, open the generated JSON and look at `orchestration_report`, `dependency_graph`, `execution_order`, `execution_log`, and `agent_results`.
+Set `DATABASE_URL` in your environment or Render dashboard to activate.
 
-**Verified scope:** dependency-graph test and local campaign execution pass in this build; 64 roles scheduled/completed; upstream data flow verified; zero failed roles in the test run. This is still local template orchestration, not 64 independent LLMs. No live OpenAI API, live PostgreSQL server, Redis/Celery, image generation or Android-device deployment is verified by this test.
+---
+
+## Version History
+
+| Version | Highlights |
+|---------|-----------|
+| **v0.1** | 64 named agent-role classes and registry; local template pipeline |
+| **v0.2** | Optional OpenAI Responses API integration (one-call strategy pack) |
+| **v0.3** | Single-agent live test for `CreativeIntelligenceAgent` |
+| **v0.4** | SQLite durable job store + `jobs_cli` (create / run / status / list) |
+| **v0.5** | Optional PostgreSQL job store with JSONB and status constraint |
+| **v0.6** | 64-role advertising campaign workflow; JSON + Markdown reports |
+| **v0.7** | Unified CLI (`--workflow advertising / core`, `--mode local / openai`) |
+| **v0.8** | 64-role contract validation (`agent_validation`, `agent_validation_self_test`) |
+| **v0.9** | Dependency-aware orchestration (topological sort, upstream context passing) |
+| **v1.0** | FastAPI web app, responsive dashboard, CORS, logging, `/api/jobs` history, `.env.example`, production deployment |
+
+---
+
+## Future Scope
+
+- 🤖 Connect live AI models to appropriate agent roles
+- 🗄️ Persistent job storage and background processing (Redis, Celery)
+- 🔐 Authentication, user accounts, and project history
+- 🖼️ Image and video generation service integrations
+- 📊 Workflow monitoring, retries, and error recovery dashboards
+- 👥 Team collaboration and reusable brand profiles
+- 🌍 Multi-language support beyond Marathi / Hindi / English
+- 🔒 Production security controls, rate limiting, and audit logging
+
+---
+
+## Target Users
+
+- 🎨 Graphic designers and creative studios
+- 📣 Digital marketing agencies
+- 🏪 Small business owners
+- 📱 Social media managers and content creators
+- 🔬 AI and automation developers
+- 🎓 Students and researchers exploring multi-agent systems
+
+---
+
+## Project Structure
+
+```
+alex_design_studio_os_agents_64/
+├── app.py                          # FastAPI application (main entry point)
+├── requirements.txt                # Python dependencies
+├── Procfile                        # Heroku/Render process definition
+├── render.yaml                     # Render Blueprint config
+├── netlify.toml                    # Netlify config (static frontend)
+├── .env.example                    # Environment variable reference
+├── DEPLOYMENT.md                   # Detailed deployment guide
+├── static/
+│   └── index.html                  # Web dashboard (single-page UI)
+├── outputs/                        # Generated campaign files (gitignored)
+└── alex_design_studio_os/
+    ├── __init__.py
+    ├── __main__.py                 # CLI entry point
+    ├── agents.py                   # All 64 agent role classes
+    ├── registry.py                 # Agent registry and factory
+    ├── base.py                     # BaseAgent and AgentSpec
+    ├── orchestrator.py             # Dependency graph + topological runner
+    ├── campaign_workflow.py        # 64-role advertising campaign workflow
+    ├── workflow.py                 # Core design workflow
+    ├── ai_workflow.py              # OpenAI Responses API workflow
+    ├── ai_provider.py              # OpenAI HTTP client
+    ├── job_store.py                # SQLite durable job store
+    ├── postgres_store.py           # PostgreSQL job store (optional)
+    ├── jobs_cli.py                 # Job management CLI
+    ├── agent_manifest.json         # Agent metadata manifest
+    ├── agent_validation.py         # Role contract validation
+    └── *_self_test.py              # Self-test modules
+```
+
+---
+
+## Conclusion
+
+ALEX DESIGN STUDIO OS is a modular creative automation platform combining a responsive web dashboard, a 64-role workflow architecture, and a dependency-aware task orchestration engine. It provides a solid foundation for organizing advertising and design workflows and can be extended with live AI providers and production infrastructure as those components are implemented and verified.
+
+---
+
+<div align="center">
+
+**Built with ❤️ for creative automation**
+
+[Web UI](https://your-app.onrender.com) · [API Docs](https://your-app.onrender.com/docs) · [GitHub](https://github.com/shubhamkothavale0047-dev/AI-Agents)
+
+</div>
