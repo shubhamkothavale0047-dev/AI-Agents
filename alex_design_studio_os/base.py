@@ -16,6 +16,10 @@ class BaseAgent:
 
     spec: AgentSpec
 
+    @property
+    def name(self) -> str:
+        return self.spec.name
+
     def run(self, payload: Dict[str, Any]) -> Dict[str, Any]:
         brief = str(payload.get("brief", "")).strip()
         return {

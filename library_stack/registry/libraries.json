@@ -1,0 +1,652 @@
+{
+  "schema_version": "1.0",
+  "project": "ALEX DESIGN STUDIO OS",
+  "stack": "ALEX ASI Graphics Design Library Stack",
+  "libraries": [
+    {
+      "name": "LangGraph",
+      "category": "01_agent_orchestration",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "PydanticAI",
+      "category": "01_agent_orchestration",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "DSPy",
+      "category": "01_agent_orchestration",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "smolagents",
+      "category": "02_optional_agents",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "CrewAI",
+      "category": "02_optional_agents",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "browser-use",
+      "category": "02_optional_agents",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "LlamaIndex",
+      "category": "03_knowledge_rag",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Qdrant",
+      "category": "03_knowledge_rag",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Unstructured",
+      "category": "03_knowledge_rag",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Mem0",
+      "category": "04_memory",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Transformers",
+      "category": "05_vision",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Ultralytics",
+      "category": "05_vision",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "SAM2",
+      "category": "05_vision",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Diffusers",
+      "category": "06_creative_generation",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "ComfyUI",
+      "category": "06_creative_generation",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "IOPaint",
+      "category": "06_creative_generation",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Graphite",
+      "category": "07_design_engine",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "FontTools",
+      "category": "07_design_engine",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "PyCairo",
+      "category": "07_design_engine",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Konva/React-Konva",
+      "category": "07_design_engine",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Remotion",
+      "category": "08_video_motion",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "MoviePy",
+      "category": "08_video_motion",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Manim",
+      "category": "08_video_motion",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Blender/bpy",
+      "category": "09_3d",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Trimesh",
+      "category": "09_3d",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "PyRender",
+      "category": "09_3d",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "vLLM",
+      "category": "10_inference",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "TensorRT-LLM",
+      "category": "10_inference",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "ONNX Runtime",
+      "category": "10_inference",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Ragas",
+      "category": "11_evaluation",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "DeepEval",
+      "category": "11_evaluation",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "TorchMetrics",
+      "category": "11_evaluation",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Inspect AI",
+      "category": "11_evaluation",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Prefect",
+      "category": "12_workflow",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Temporal",
+      "category": "12_workflow",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Langfuse",
+      "category": "13_observability",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "LangSmith",
+      "category": "13_observability",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Weights & Biases",
+      "category": "13_observability",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Prometheus",
+      "category": "13_observability",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Garak",
+      "category": "14_ai_security",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Microsoft PyRIT",
+      "category": "14_ai_security",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "NeMo Guardrails",
+      "category": "14_ai_security",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    },
+    {
+      "name": "Guardrails AI",
+      "category": "14_ai_security",
+      "status": "candidate",
+      "installed_by_default": false,
+      "verification_required": [
+        "project_identity",
+        "version",
+        "license_and_commercial_use",
+        "security_advisories",
+        "compatibility",
+        "data_privacy"
+      ],
+      "notes": "Registry candidate; not claimed production-verified."
+    }
+  ]
+}

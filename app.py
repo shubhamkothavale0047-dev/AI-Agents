@@ -1,17 +1,20 @@
 """ALEX DESIGN STUDIO OS — Production FastAPI application."""
 from pathlib import Path
 from uuid import uuid4
-import json, os, logging
+import json, os, logging, re
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from pydantic import BaseModel, Field
 
 from alex_design_studio_os.registry import create_all_agents
 from alex_design_studio_os.campaign_workflow import run_advertising_campaign
+from alex_design_studio_os.library_registry import get_library_registry
 
 # ── Logging ──────────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -23,6 +26,7 @@ logger = logging.getLogger("alex_os")
 BASE = Path(__file__).resolve().parent
 OUT = Path(os.getenv("ALEX_OUTPUT_DIR", str(BASE / "outputs")))
 OUT.mkdir(parents=True, exist_ok=True)
+SAFE_JOB_ID_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
 # ── Lifespan (startup / shutdown hooks) ──────────────────────────────────────
 @asynccontextmanager
@@ -54,6 +58,9 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+
+if (BASE / "static").is_dir():
+    app.mount("/static", StaticFiles(directory=str(BASE / "static")), name="static")
 
 # ── Request / Response models ─────────────────────────────────────────────────
 class CampaignRequest(BaseModel):
@@ -90,6 +97,11 @@ def agents():
         for key, agent in registry.items()
     ]
     return {"count": len(rows), "agents": rows}
+
+@app.get("/api/libraries", tags=["Library Stack"], summary="List optional ALEX ASI library candidates")
+def libraries():
+    """Return candidate libraries; entries are not automatically installed or production-approved."""
+    return get_library_registry()
 
 @app.post("/api/campaign", tags=["Campaign"], summary="Run a full 64-role campaign workflow")
 def campaign(req: CampaignRequest):
@@ -140,10 +152,30 @@ def list_jobs():
     for f in sorted(OUT.glob("*.json"), key=lambda p: p.stat().st_mtime, reverse=True)[:50]:
         try:
             data = json.loads(f.read_text(encoding="utf-8"))
+            name = (
+                data.get("campaign_name")
+                or data.get("client_brief")
+                or data.get("campaign_goal")
+                or data.get("system")
+                or f.stem
+            )
+            if len(name) > 60:
+                name = name[:57] + "…"
+            
+            exec_data = data.get("execution", {})
+            if isinstance(exec_data, dict) and exec_data.get("all_roles_completed"):
+                status = "SUCCEEDED"
+            elif data.get("status") in ("SUCCEEDED", "PARTIAL", "FAILED"):
+                status = data["status"]
+            elif "creative_strategy" in data or "core_pipeline" in data:
+                status = "SUCCEEDED"
+            else:
+                status = "PARTIAL"
+
             jobs.append({
                 "job_id": f.stem,
-                "campaign_name": data.get("campaign_name", ""),
-                "status": data.get("execution", {}).get("all_roles_completed") and "SUCCEEDED" or "PARTIAL",
+                "campaign_name": name,
+                "status": status,
                 "created_at_utc": data.get("created_at_utc", ""),
             })
         except Exception:
@@ -152,37 +184,72 @@ def list_jobs():
 
 @app.get("/api/jobs/{job_id}/json", tags=["Jobs"], summary="Download job result as JSON")
 def get_json(job_id: str):
-    if not job_id.isalnum():
-        raise HTTPException(status_code=400, detail="Invalid job ID")
-    p = OUT / f"{job_id}.json"
-    if not p.exists():
+    if not SAFE_JOB_ID_RE.match(job_id):
+        raise HTTPException(status_code=400, detail="Invalid job ID format")
+    try:
+        target = (OUT / f"{job_id}.json").resolve()
+        if not target.is_relative_to(OUT.resolve()):
+            raise HTTPException(status_code=400, detail="Access denied")
+    except (ValueError, RuntimeError):
+        raise HTTPException(status_code=400, detail="Invalid job path")
+
+    if not target.is_file():
         raise HTTPException(status_code=404, detail="Job not found on this instance")
+    try:
+        content = json.loads(target.read_text(encoding="utf-8"))
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Failed to read job file: {exc}")
+
     return JSONResponse(
-        json.loads(p.read_text(encoding="utf-8")),
+        content,
         headers={"Content-Disposition": f'attachment; filename="alex-campaign-{job_id}.json"'},
     )
 
 @app.get("/api/jobs/{job_id}/markdown", tags=["Jobs"], summary="Download job result as Markdown")
 def get_markdown(job_id: str):
-    if not job_id.isalnum():
-        raise HTTPException(status_code=400, detail="Invalid job ID")
-    p = OUT / f"{job_id}.md"
-    if not p.exists():
+    if not SAFE_JOB_ID_RE.match(job_id):
+        raise HTTPException(status_code=400, detail="Invalid job ID format")
+    try:
+        target = (OUT / f"{job_id}.md").resolve()
+        if not target.is_relative_to(OUT.resolve()):
+            raise HTTPException(status_code=400, detail="Access denied")
+    except (ValueError, RuntimeError):
+        raise HTTPException(status_code=400, detail="Invalid job path")
+
+    if not target.is_file():
         raise HTTPException(status_code=404, detail="Job not found on this instance")
     return PlainTextResponse(
-        p.read_text(encoding="utf-8"),
+        target.read_text(encoding="utf-8"),
         media_type="text/markdown; charset=utf-8",
         headers={"Content-Disposition": f'attachment; filename="alex-campaign-{job_id}.md"'},
     )
 
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
 def home():
-    return (BASE / "static" / "index.html").read_text(encoding="utf-8")
+    index_file = BASE / "static" / "index.html"
+    if not index_file.is_file():
+        raise HTTPException(status_code=404, detail="Frontend index.html not found")
+    return index_file.read_text(encoding="utf-8")
 
-# ── Global error handler ──────────────────────────────────────────────────────
+# ── Exception handlers ────────────────────────────────────────────────────────
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request: Request, exc: StarletteHTTPException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.detail},
+        headers=getattr(exc, "headers", None),
+    )
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=422,
+        content={"detail": exc.errors()},
+    )
+
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
-    logger.exception("Unhandled exception for %s %s", request.method, request.url)
+    logger.exception("Unhandled server exception for %s %s", request.method, request.url)
     return JSONResponse(
         status_code=500,
         content={"detail": "Internal server error. Please try again."},

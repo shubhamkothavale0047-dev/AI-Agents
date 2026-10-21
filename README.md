@@ -30,6 +30,7 @@ The system transforms a simple project brief into structured creative deliverabl
 | 📘 ReDoc | `https://your-app.onrender.com/redoc` |
 | 💚 Health Check | `https://your-app.onrender.com/health` |
 | 🤖 Agents JSON | `https://your-app.onrender.com/api/agents` |
+| 🧰 Library Registry | `https://your-app.onrender.com/api/libraries` |
 
 ---
 
@@ -50,6 +51,10 @@ The system transforms a simple project brief into structured creative deliverabl
 13. [Target Users](#target-users)
 
 ---
+
+## Integrated ALEX ASI Graphics Design Library Stack
+
+The `library_stack/` directory adds a categorized candidate registry and adoption policy. `GET /api/libraries` exposes the registry. These entries are **not installed automatically** and are not all production-verified; adopt each library only after reviewing its exact upstream identity, version, license, security, compatibility and data-handling behavior. The existing v0.9 orchestration workflow remains the runnable core.
 
 ## Key Features
 

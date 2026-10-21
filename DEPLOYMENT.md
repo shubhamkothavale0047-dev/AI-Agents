@@ -97,3 +97,8 @@ python -m alex_design_studio_os --mode openai --workflow core \
 - **This build makes zero independent live LLM calls** by default.
 - It does not claim 64 independent AI models, live market research, or generated image/video files.
 - Do **not** publish generated offer prices or factual claims without client verification.
+
+
+## ALEX ASI Library Stack Integration
+
+The optional library registry is available at `/api/libraries`. It is metadata only; do not install every listed framework into the Render web service. Keep heavy GPU inference, image/video generation, and 3D rendering in separately provisioned workers/services if needed. Verify `/health` and `/api/libraries` after deployment.
