@@ -57,7 +57,7 @@ def test_fastapi_http_endpoints_via_testclient():
     assert r_health.status_code == 200
     assert r_health.json()["status"] == "ok"
 
-    # HTML home & Contact Details verification
+    # HTML home & Contact Details / 3D Card Flip verification
     r_home = client.get("/")
     assert r_home.status_code == 200
     assert "ALEX DESIGN STUDIO OS" in r_home.text
@@ -67,6 +67,11 @@ def test_fastapi_http_endpoints_via_testclient():
     assert "linkedin.com/in/shubham-kothavale-b06089318" in r_home.text
     assert "instagram.com/shubham.kothavale0047" in r_home.text
     assert "contactModal" in r_home.text
+    assert "flip-card" in r_home.text
+    assert "toggleCardFlip" in r_home.text
+    assert "handleCardClick" in r_home.text
+    assert "card-front" in r_home.text
+    assert "card-back" in r_home.text
 
     # Agents list
     r_agents = client.get("/api/agents")

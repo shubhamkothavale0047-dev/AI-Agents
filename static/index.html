@@ -182,10 +182,64 @@ textarea{min-height:92px;resize:vertical}
 }
 .dl-btn:hover{background:#132e54;border-color:var(--cyan);transform:translateY(-1px)}
 
-.resultgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+/* ── 3D Card Flip Infrastructure ── */
+.flip-card{
+  perspective:1200px;
+  position:relative;
+  cursor:pointer;
+}
+.card-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  min-height:inherit;
+  transform-style:preserve-3d;
+  transition:transform .65s cubic-bezier(.23,1,.32,1);
+}
+.flip-card.is-flipped .card-inner{
+  transform:rotateY(180deg);
+}
+.card-face{
+  width:100%;
+  height:100%;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+  border-radius:inherit;
+}
+.card-front{
+  transform:rotateY(0deg);
+  display:flex;
+  flex-direction:column;
+}
+.card-back{
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  transform:rotateY(180deg);
+  background:linear-gradient(150deg,#07152b 0%,#0a1f3d 100%);
+  border:1px solid var(--cyan);
+  border-radius:inherit;
+  box-shadow:0 0 28px rgba(0,229,255,.18);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:18px;
+  overflow-y:auto;
+  z-index:3;
+  cursor:default;
+}
+
+/* ── Result Cards Flip Adaptations ── */
+.resultgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 .result-card{
+  background:transparent;border:none;padding:0;border-radius:var(--radius);
+  min-height:390px;
+}
+.result-card .card-front{
   background:#071220;border:1px solid var(--card-border);border-radius:var(--radius);
-  padding:20px;display:flex;flex-direction:column;
+  padding:20px;flex:1;
+}
+.result-card .card-back{
+  border-radius:var(--radius);padding:22px;
 }
 .result-card h3{
   font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
@@ -221,12 +275,19 @@ textarea{min-height:92px;resize:vertical}
 .filter-btn.active{background:#0e294b;border-color:var(--cyan);color:var(--cyan)}
 
 /* ── Library Stack Cards Grid ── */
-.library-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.library-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
 .lib-card{
-  background:#071220;border:1px solid var(--card-border);border-radius:var(--radius-sm);
-  padding:16px;display:flex;flex-direction:column;gap:10px;transition:all .2s;
+  background:transparent;border:none;padding:0;border-radius:var(--radius-sm);
+  min-height:270px;
 }
-.lib-card:hover{border-color:#254874;transform:translateY(-2px)}
+.lib-card .card-front{
+  background:#071220;border:1px solid var(--card-border);border-radius:var(--radius-sm);
+  padding:16px;flex:1;display:flex;flex-direction:column;gap:10px;transition:border-color .2s;
+}
+.lib-card:hover .card-front{border-color:#254874}
+.lib-card .card-back{
+  border-radius:var(--radius-sm);padding:16px;
+}
 .lib-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .lib-name{font-size:15px;font-weight:800;color:#fff}
 .lib-status{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:#00e5ff18;color:var(--cyan);border:1px solid #00e5ff40}
@@ -238,15 +299,82 @@ textarea{min-height:92px;resize:vertical}
 /* ── Agents Grid ── */
 .agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
 .agent-card{
-  background:#071220;border:1px solid var(--card-border);border-radius:var(--radius-sm);
-  padding:16px;display:flex;flex-direction:column;gap:8px;transition:all .18s;
+  background:transparent;border:none;padding:0;border-radius:var(--radius-sm);
+  min-height:250px;
 }
-.agent-card:hover{border-color:#254874;transform:translateY(-2px)}
+.agent-card .card-front{
+  background:#071220;border:1px solid var(--card-border);border-radius:var(--radius-sm);
+  padding:16px;flex:1;display:flex;flex-direction:column;gap:8px;transition:border-color .18s;
+}
+.agent-card:hover .card-front{border-color:#254874}
+.agent-card .card-back{
+  border-radius:var(--radius-sm);padding:16px;
+}
 .agent-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .agent-name{font-size:14px;font-weight:800;color:#fff;line-height:1.3}
 .agent-cat{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:#35d49a15;color:var(--green);border:1px solid #35d49a30}
 .agent-resp{font-size:12px;color:var(--muted);line-height:1.5}
 .agent-mode{font-size:10px;font-family:var(--mono);color:var(--dim);margin-top:auto}
+
+/* ── Back of Card Contact Details ── */
+.cb-header{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #142a45;
+}
+.cb-badge{
+  font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--cyan);background:#00e5ff15;padding:3px 8px;border-radius:4px;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.cb-flip-btn{
+  background:#0d2038;border:1px solid #1e426d;color:#9bc4f5;
+  font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;
+  cursor:pointer;transition:all .15s;font-family:inherit;display:inline-flex;align-items:center;gap:4px;
+}
+.cb-flip-btn:hover{background:var(--cyan);color:#050b14;border-color:var(--cyan)}
+.cb-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:2px}
+.cb-subtitle{font-size:11px;color:var(--muted);margin-bottom:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cb-channels{display:flex;flex-direction:column;gap:6px;flex:1;margin-bottom:10px}
+.cb-item{
+  background:#050c18;border:1px solid #12253f;border-radius:8px;
+  padding:7px 10px;display:flex;align-items:center;justify-content:space-between;
+  gap:8px;transition:all .15s;
+}
+.cb-item:hover{background:#091932;border-color:var(--cyan)}
+.cb-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
+.cb-meta{display:flex;flex-direction:column;min-width:0;flex:1}
+.cb-label{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.05em}
+.cb-val{font-size:11.5px;font-weight:700;color:#e4efff;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cb-val:hover{color:var(--cyan);text-decoration:underline}
+.cb-action{
+  background:#0c1f38;border:1px solid #1c3c64;color:var(--cyan);
+  padding:4px 8px;border-radius:5px;font-size:10px;font-weight:700;
+  text-decoration:none;cursor:pointer;white-space:nowrap;font-family:inherit;
+  transition:all .15s;
+}
+.cb-action:hover{background:var(--cyan);color:#050b14;border-color:var(--cyan)}
+.cb-action.copied{background:var(--green);color:#050b14;border-color:var(--green)}
+.cb-flip-return{
+  width:100%;background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(59,130,246,.18));
+  border:1px solid rgba(0,229,255,.35);color:var(--cyan);
+  padding:7px 12px;border-radius:6px;font-size:11px;font-weight:800;
+  cursor:pointer;font-family:inherit;transition:all .15s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.cb-flip-return:hover{background:var(--cyan);color:#050b14}
+.flip-chip{
+  font-size:10px;font-weight:700;color:var(--muted);
+  border:1px dashed #1a3c66;background:#061120;
+  padding:3px 8px;border-radius:4px;cursor:pointer;transition:all .15s;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.flip-chip:hover{color:var(--cyan);border-color:var(--cyan);border-style:solid}
+.flip-hint-badge{
+  font-size:9.5px;font-weight:700;color:#9bc4f5;background:#0d2138;
+  border:1px solid #19385c;padding:3px 8px;border-radius:99px;
+  display:inline-flex;align-items:center;gap:4px;cursor:pointer;transition:all .18s;
+}
+.flip-hint-badge:hover{background:var(--cyan);color:#050b14;border-color:var(--cyan)}
 
 /* ── Jobs Table ── */
 .jobs-list{display:flex;flex-direction:column;gap:10px}
@@ -558,57 +686,381 @@ footer a:hover{text-decoration:underline}
       </div>
 
       <div class="resultgrid">
-        <div class="result-card">
-          <h3>📋 Poster Copy &amp; Headline</h3>
-          <div class="result-box" id="poster"></div>
-          <div class="result-actions">
-            <button type="button" class="copy-btn" onclick="copyResult('poster', this)">Copy Poster</button>
-            <button type="button" class="card-contact-btn" onclick="openContactModal('Poster Copy Deliverable')">💬 Contact Us</button>
+        <!-- 1. Poster Copy -->
+        <div class="flip-card result-card" onclick="handleCardClick(this, event)">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <h3 style="margin:0">📋 Poster Copy &amp; Headline</h3>
+                <span class="flip-hint-badge" onclick="toggleCardFlip(this, event)">🔄 Click to Flip</span>
+              </div>
+              <div class="result-box" id="poster"></div>
+              <div class="result-actions">
+                <button type="button" class="copy-btn" onclick="copyResult('poster', this)">Copy Poster</button>
+                <button type="button" class="card-contact-btn" onclick="toggleCardFlip(this, event)">🔄 Flip for Contact Details</button>
+              </div>
+            </div>
+            <div class="card-face card-back" onclick="event.stopPropagation()">
+              <div class="cb-header">
+                <span class="cb-badge">📇 DIRECT CONTACT</span>
+                <button type="button" class="cb-flip-btn" onclick="toggleCardFlip(this, event)">⤾ Flip</button>
+              </div>
+              <div class="cb-title">Shubham Kothavale</div>
+              <div class="cb-subtitle">Poster Copy Deliverable Inquiry</div>
+              <div class="cb-channels">
+                <div class="cb-item">
+                  <div class="cb-icon">✉️</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Email</span>
+                    <a href="mailto:shubhamkothavale81@gmail.com?subject=Poster%20Deliverable%20Inquiry" class="cb-val" onclick="event.stopPropagation()">shubhamkothavale81@gmail.com</a>
+                  </div>
+                  <button type="button" class="cb-action" onclick="copyContactText('shubhamkothavale81@gmail.com', this, event)">Copy</button>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">📞</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Phone &amp; WhatsApp</span>
+                    <a href="tel:+917057539094" class="cb-val" onclick="event.stopPropagation()">+91 7057539094</a>
+                  </div>
+                  <div style="display:flex;gap:4px">
+                    <a href="https://wa.me/917057539094?text=Hi%20Shubham,%20inquiring%20about%20Poster%20Deliverable" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Chat</a>
+                    <a href="tel:+917057539094" class="cb-action" onclick="event.stopPropagation()">Call</a>
+                  </div>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">💼</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">LinkedIn</span>
+                    <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">shubham-kothavale-b06089318</a>
+                  </div>
+                  <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">📸</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Instagram</span>
+                    <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">@shubham.kothavale0047</a>
+                  </div>
+                  <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+                </div>
+              </div>
+              <button type="button" class="cb-flip-return" onclick="toggleCardFlip(this, event)">⤾ Return to Poster Deliverable</button>
+            </div>
           </div>
         </div>
 
-        <div class="result-card">
-          <h3>📸 Instagram Caption &amp; Hashtags</h3>
-          <div class="result-box" id="caption"></div>
-          <div class="result-actions">
-            <button type="button" class="copy-btn" onclick="copyResult('caption', this)">Copy Caption</button>
-            <button type="button" class="card-contact-btn" onclick="openContactModal('Instagram Caption Deliverable')">💬 Contact Us</button>
+        <!-- 2. Instagram Caption -->
+        <div class="flip-card result-card" onclick="handleCardClick(this, event)">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <h3 style="margin:0">📸 Instagram Caption &amp; Hashtags</h3>
+                <span class="flip-hint-badge" onclick="toggleCardFlip(this, event)">🔄 Click to Flip</span>
+              </div>
+              <div class="result-box" id="caption"></div>
+              <div class="result-actions">
+                <button type="button" class="copy-btn" onclick="copyResult('caption', this)">Copy Caption</button>
+                <button type="button" class="card-contact-btn" onclick="toggleCardFlip(this, event)">🔄 Flip for Contact Details</button>
+              </div>
+            </div>
+            <div class="card-face card-back" onclick="event.stopPropagation()">
+              <div class="cb-header">
+                <span class="cb-badge">📇 DIRECT CONTACT</span>
+                <button type="button" class="cb-flip-btn" onclick="toggleCardFlip(this, event)">⤾ Flip</button>
+              </div>
+              <div class="cb-title">Shubham Kothavale</div>
+              <div class="cb-subtitle">Instagram Caption Deliverable Inquiry</div>
+              <div class="cb-channels">
+                <div class="cb-item">
+                  <div class="cb-icon">✉️</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Email</span>
+                    <a href="mailto:shubhamkothavale81@gmail.com?subject=Instagram%20Caption%20Inquiry" class="cb-val" onclick="event.stopPropagation()">shubhamkothavale81@gmail.com</a>
+                  </div>
+                  <button type="button" class="cb-action" onclick="copyContactText('shubhamkothavale81@gmail.com', this, event)">Copy</button>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">📞</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Phone &amp; WhatsApp</span>
+                    <a href="tel:+917057539094" class="cb-val" onclick="event.stopPropagation()">+91 7057539094</a>
+                  </div>
+                  <div style="display:flex;gap:4px">
+                    <a href="https://wa.me/917057539094?text=Hi%20Shubham,%20inquiring%20about%20Instagram%20Caption" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Chat</a>
+                    <a href="tel:+917057539094" class="cb-action" onclick="event.stopPropagation()">Call</a>
+                  </div>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">💼</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">LinkedIn</span>
+                    <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">shubham-kothavale-b06089318</a>
+                  </div>
+                  <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">📸</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Instagram</span>
+                    <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">@shubham.kothavale0047</a>
+                  </div>
+                  <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+                </div>
+              </div>
+              <button type="button" class="cb-flip-return" onclick="toggleCardFlip(this, event)">⤾ Return to Caption Deliverable</button>
+            </div>
           </div>
         </div>
 
-        <div class="result-card">
-          <h3>💬 WhatsApp Status Copy</h3>
-          <div class="result-box" id="whatsapp"></div>
-          <div class="result-actions">
-            <button type="button" class="copy-btn" onclick="copyResult('whatsapp', this)">Copy WhatsApp</button>
-            <button type="button" class="card-contact-btn" onclick="openContactModal('WhatsApp Status Deliverable')">💬 Contact Us</button>
+        <!-- 3. WhatsApp Status -->
+        <div class="flip-card result-card" onclick="handleCardClick(this, event)">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <h3 style="margin:0">💬 WhatsApp Status Copy</h3>
+                <span class="flip-hint-badge" onclick="toggleCardFlip(this, event)">🔄 Click to Flip</span>
+              </div>
+              <div class="result-box" id="whatsapp"></div>
+              <div class="result-actions">
+                <button type="button" class="copy-btn" onclick="copyResult('whatsapp', this)">Copy WhatsApp</button>
+                <button type="button" class="card-contact-btn" onclick="toggleCardFlip(this, event)">🔄 Flip for Contact Details</button>
+              </div>
+            </div>
+            <div class="card-face card-back" onclick="event.stopPropagation()">
+              <div class="cb-header">
+                <span class="cb-badge">📇 DIRECT CONTACT</span>
+                <button type="button" class="cb-flip-btn" onclick="toggleCardFlip(this, event)">⤾ Flip</button>
+              </div>
+              <div class="cb-title">Shubham Kothavale</div>
+              <div class="cb-subtitle">WhatsApp Status Deliverable Inquiry</div>
+              <div class="cb-channels">
+                <div class="cb-item">
+                  <div class="cb-icon">✉️</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Email</span>
+                    <a href="mailto:shubhamkothavale81@gmail.com?subject=WhatsApp%20Status%20Inquiry" class="cb-val" onclick="event.stopPropagation()">shubhamkothavale81@gmail.com</a>
+                  </div>
+                  <button type="button" class="cb-action" onclick="copyContactText('shubhamkothavale81@gmail.com', this, event)">Copy</button>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">📞</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Phone &amp; WhatsApp</span>
+                    <a href="tel:+917057539094" class="cb-val" onclick="event.stopPropagation()">+91 7057539094</a>
+                  </div>
+                  <div style="display:flex;gap:4px">
+                    <a href="https://wa.me/917057539094?text=Hi%20Shubham,%20inquiring%20about%20WhatsApp%20Status" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Chat</a>
+                    <a href="tel:+917057539094" class="cb-action" onclick="event.stopPropagation()">Call</a>
+                  </div>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">💼</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">LinkedIn</span>
+                    <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">shubham-kothavale-b06089318</a>
+                  </div>
+                  <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">📸</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Instagram</span>
+                    <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">@shubham.kothavale0047</a>
+                  </div>
+                  <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+                </div>
+              </div>
+              <button type="button" class="cb-flip-return" onclick="toggleCardFlip(this, event)">⤾ Return to WhatsApp Deliverable</button>
+            </div>
           </div>
         </div>
 
-        <div class="result-card">
-          <h3>📱 Instagram Story Sequence</h3>
-          <div class="result-box" id="stories"></div>
-          <div class="result-actions">
-            <button type="button" class="copy-btn" onclick="copyResult('stories', this)">Copy Stories</button>
-            <button type="button" class="card-contact-btn" onclick="openContactModal('Instagram Story Sequence Deliverable')">💬 Contact Us</button>
+        <!-- 4. Story Sequence -->
+        <div class="flip-card result-card" onclick="handleCardClick(this, event)">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <h3 style="margin:0">📱 Instagram Story Sequence</h3>
+                <span class="flip-hint-badge" onclick="toggleCardFlip(this, event)">🔄 Click to Flip</span>
+              </div>
+              <div class="result-box" id="stories"></div>
+              <div class="result-actions">
+                <button type="button" class="copy-btn" onclick="copyResult('stories', this)">Copy Stories</button>
+                <button type="button" class="card-contact-btn" onclick="toggleCardFlip(this, event)">🔄 Flip for Contact Details</button>
+              </div>
+            </div>
+            <div class="card-face card-back" onclick="event.stopPropagation()">
+              <div class="cb-header">
+                <span class="cb-badge">📇 DIRECT CONTACT</span>
+                <button type="button" class="cb-flip-btn" onclick="toggleCardFlip(this, event)">⤾ Flip</button>
+              </div>
+              <div class="cb-title">Shubham Kothavale</div>
+              <div class="cb-subtitle">Story Sequence Deliverable Inquiry</div>
+              <div class="cb-channels">
+                <div class="cb-item">
+                  <div class="cb-icon">✉️</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Email</span>
+                    <a href="mailto:shubhamkothavale81@gmail.com?subject=Story%20Sequence%20Inquiry" class="cb-val" onclick="event.stopPropagation()">shubhamkothavale81@gmail.com</a>
+                  </div>
+                  <button type="button" class="cb-action" onclick="copyContactText('shubhamkothavale81@gmail.com', this, event)">Copy</button>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">📞</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Phone &amp; WhatsApp</span>
+                    <a href="tel:+917057539094" class="cb-val" onclick="event.stopPropagation()">+91 7057539094</a>
+                  </div>
+                  <div style="display:flex;gap:4px">
+                    <a href="https://wa.me/917057539094?text=Hi%20Shubham,%20inquiring%20about%20Story%20Sequence" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Chat</a>
+                    <a href="tel:+917057539094" class="cb-action" onclick="event.stopPropagation()">Call</a>
+                  </div>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">💼</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">LinkedIn</span>
+                    <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">shubham-kothavale-b06089318</a>
+                  </div>
+                  <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">📸</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Instagram</span>
+                    <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">@shubham.kothavale0047</a>
+                  </div>
+                  <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+                </div>
+              </div>
+              <button type="button" class="cb-flip-return" onclick="toggleCardFlip(this, event)">⤾ Return to Story Sequence</button>
+            </div>
           </div>
         </div>
 
-        <div class="result-card">
-          <h3>🎨 Creative Direction &amp; Formats</h3>
-          <div class="result-box" id="creative"></div>
-          <div class="result-actions">
-            <button type="button" class="copy-btn" onclick="copyResult('creative', this)">Copy Direction</button>
-            <button type="button" class="card-contact-btn" onclick="openContactModal('Creative Direction Deliverable')">💬 Contact Us</button>
+        <!-- 5. Creative Direction -->
+        <div class="flip-card result-card" onclick="handleCardClick(this, event)">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <h3 style="margin:0">🎨 Creative Direction &amp; Formats</h3>
+                <span class="flip-hint-badge" onclick="toggleCardFlip(this, event)">🔄 Click to Flip</span>
+              </div>
+              <div class="result-box" id="creative"></div>
+              <div class="result-actions">
+                <button type="button" class="copy-btn" onclick="copyResult('creative', this)">Copy Direction</button>
+                <button type="button" class="card-contact-btn" onclick="toggleCardFlip(this, event)">🔄 Flip for Contact Details</button>
+              </div>
+            </div>
+            <div class="card-face card-back" onclick="event.stopPropagation()">
+              <div class="cb-header">
+                <span class="cb-badge">📇 DIRECT CONTACT</span>
+                <button type="button" class="cb-flip-btn" onclick="toggleCardFlip(this, event)">⤾ Flip</button>
+              </div>
+              <div class="cb-title">Shubham Kothavale</div>
+              <div class="cb-subtitle">Creative Direction Deliverable Inquiry</div>
+              <div class="cb-channels">
+                <div class="cb-item">
+                  <div class="cb-icon">✉️</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Email</span>
+                    <a href="mailto:shubhamkothavale81@gmail.com?subject=Creative%20Direction%20Inquiry" class="cb-val" onclick="event.stopPropagation()">shubhamkothavale81@gmail.com</a>
+                  </div>
+                  <button type="button" class="cb-action" onclick="copyContactText('shubhamkothavale81@gmail.com', this, event)">Copy</button>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">📞</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Phone &amp; WhatsApp</span>
+                    <a href="tel:+917057539094" class="cb-val" onclick="event.stopPropagation()">+91 7057539094</a>
+                  </div>
+                  <div style="display:flex;gap:4px">
+                    <a href="https://wa.me/917057539094?text=Hi%20Shubham,%20inquiring%20about%20Creative%20Direction" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Chat</a>
+                    <a href="tel:+917057539094" class="cb-action" onclick="event.stopPropagation()">Call</a>
+                  </div>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">💼</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">LinkedIn</span>
+                    <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">shubham-kothavale-b06089318</a>
+                  </div>
+                  <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">📸</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Instagram</span>
+                    <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">@shubham.kothavale0047</a>
+                  </div>
+                  <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+                </div>
+              </div>
+              <button type="button" class="cb-flip-return" onclick="toggleCardFlip(this, event)">⤾ Return to Creative Direction</button>
+            </div>
           </div>
         </div>
 
-        <div class="result-card">
-          <h3>✅ Pre-Publish QA Checklist</h3>
-          <div class="result-box" id="qa"></div>
-          <div class="result-actions">
-            <button type="button" class="copy-btn" onclick="copyResult('qa', this)">Copy QA Checklist</button>
-            <button type="button" class="card-contact-btn" onclick="openContactModal('QA Checklist Deliverable')">💬 Contact Us</button>
+        <!-- 6. QA Checklist -->
+        <div class="flip-card result-card" onclick="handleCardClick(this, event)">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                <h3 style="margin:0">✅ Pre-Publish QA Checklist</h3>
+                <span class="flip-hint-badge" onclick="toggleCardFlip(this, event)">🔄 Click to Flip</span>
+              </div>
+              <div class="result-box" id="qa"></div>
+              <div class="result-actions">
+                <button type="button" class="copy-btn" onclick="copyResult('qa', this)">Copy QA Checklist</button>
+                <button type="button" class="card-contact-btn" onclick="toggleCardFlip(this, event)">🔄 Flip for Contact Details</button>
+              </div>
+            </div>
+            <div class="card-face card-back" onclick="event.stopPropagation()">
+              <div class="cb-header">
+                <span class="cb-badge">📇 DIRECT CONTACT</span>
+                <button type="button" class="cb-flip-btn" onclick="toggleCardFlip(this, event)">⤾ Flip</button>
+              </div>
+              <div class="cb-title">Shubham Kothavale</div>
+              <div class="cb-subtitle">QA Checklist Deliverable Inquiry</div>
+              <div class="cb-channels">
+                <div class="cb-item">
+                  <div class="cb-icon">✉️</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Email</span>
+                    <a href="mailto:shubhamkothavale81@gmail.com?subject=QA%20Checklist%20Inquiry" class="cb-val" onclick="event.stopPropagation()">shubhamkothavale81@gmail.com</a>
+                  </div>
+                  <button type="button" class="cb-action" onclick="copyContactText('shubhamkothavale81@gmail.com', this, event)">Copy</button>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">📞</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Phone &amp; WhatsApp</span>
+                    <a href="tel:+917057539094" class="cb-val" onclick="event.stopPropagation()">+91 7057539094</a>
+                  </div>
+                  <div style="display:flex;gap:4px">
+                    <a href="https://wa.me/917057539094?text=Hi%20Shubham,%20inquiring%20about%20QA%20Checklist" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Chat</a>
+                    <a href="tel:+917057539094" class="cb-action" onclick="event.stopPropagation()">Call</a>
+                  </div>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">💼</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">LinkedIn</span>
+                    <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">shubham-kothavale-b06089318</a>
+                  </div>
+                  <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+                </div>
+                <div class="cb-item">
+                  <div class="cb-icon">📸</div>
+                  <div class="cb-meta">
+                    <span class="cb-label">Instagram</span>
+                    <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">@shubham.kothavale0047</a>
+                  </div>
+                  <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+                </div>
+              </div>
+              <button type="button" class="cb-flip-return" onclick="toggleCardFlip(this, event)">⤾ Return to QA Checklist</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1020,21 +1472,29 @@ function renderLibraries() {
   }
 
   $('libraryList').innerHTML = filtered.map(l => `
-    <div class="lib-card">
-      <div class="lib-header">
-        <span class="lib-name">${esc(l.name)}</span>
-        <span class="lib-status">${esc(l.status || 'candidate').toUpperCase()}</span>
-      </div>
-      <span class="lib-cat">${esc((l.category || '').replace('_',' '))}</span>
-      <p class="lib-notes">${esc(l.notes || 'Registry candidate framework.')}</p>
-      <div class="lib-checks">
-        ${(l.verification_required || ['license','security','compatibility']).map(v => `
-          <span class="lib-check">✓ ${esc(v.replace(/_/g,' '))}</span>
-        `).join('')}
-      </div>
-      <div class="card-contact-strip">
-        <button type="button" class="card-contact-btn" onclick="openContactModal('Library: ' + '${esc(l.name)}')">💬 Contact Us</button>
-        <span class="card-contact-hint">Inquire / Integrate</span>
+    <div class="flip-card lib-card" onclick="handleCardClick(this, event)">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="lib-header">
+            <span class="lib-name">${esc(l.name)}</span>
+            <span class="flip-chip" onclick="toggleCardFlip(this, event)">🔄 Flip Card</span>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+            <span class="lib-status">${esc(l.status || 'candidate').toUpperCase()}</span>
+            <span class="lib-cat">${esc((l.category || '').replace('_',' '))}</span>
+          </div>
+          <p class="lib-notes">${esc(l.notes || 'Registry candidate framework.')}</p>
+          <div class="lib-checks">
+            ${(l.verification_required || ['license','security','compatibility']).map(v => `
+              <span class="lib-check">✓ ${esc(v.replace(/_/g,' '))}</span>
+            `).join('')}
+          </div>
+          <div class="card-contact-strip">
+            <button type="button" class="card-contact-btn" onclick="toggleCardFlip(this, event)">🔄 Flip for Contact</button>
+            <span class="card-contact-hint">Click card to flip</span>
+          </div>
+        </div>
+        ${getCardBackHtml('Library: ' + l.name, l.category)}
       </div>
     </div>
   `).join('');
@@ -1085,16 +1545,22 @@ function renderAgents() {
   }
 
   $('agentList').innerHTML = filtered.map(a => `
-    <div class="agent-card">
-      <div class="agent-header">
-        <span class="agent-name">${esc(a.name || a.key)}</span>
-        <span class="agent-cat">${esc(a.category || 'Specialist')}</span>
-      </div>
-      <p class="agent-resp">${esc(a.responsibility || 'Orchestration agent role.')}</p>
-      <span class="agent-mode">KEY: ${esc(a.key)} · ${esc(a.mode || 'LOCAL_TEMPLATE')}</span>
-      <div class="card-contact-strip">
-        <button type="button" class="card-contact-btn" onclick="openContactModal('Agent Role: ' + '${esc(a.name || a.key)}')">💬 Contact Us</button>
-        <span class="card-contact-hint">Custom Role / Hire</span>
+    <div class="flip-card agent-card" onclick="handleCardClick(this, event)">
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <div class="agent-header">
+            <span class="agent-name">${esc(a.name || a.key)}</span>
+            <span class="flip-chip" onclick="toggleCardFlip(this, event)">🔄 Flip Card</span>
+          </div>
+          <span class="agent-cat">${esc(a.category || 'Specialist')}</span>
+          <p class="agent-resp">${esc(a.responsibility || 'Orchestration agent role.')}</p>
+          <span class="agent-mode">KEY: ${esc(a.key)} · ${esc(a.mode || 'LOCAL_TEMPLATE')}</span>
+          <div class="card-contact-strip">
+            <button type="button" class="card-contact-btn" onclick="toggleCardFlip(this, event)">🔄 Flip for Contact</button>
+            <span class="card-contact-hint">Click card to flip</span>
+          </div>
+        </div>
+        ${getCardBackHtml('Agent Role: ' + (a.name || a.key), a.category)}
       </div>
     </div>
   `).join('');
@@ -1154,6 +1620,89 @@ async function loadJobIntoView(jobId) {
   }
 }
 
+// ── 3D Card Flip Handlers ───────────────────────────────────────────────────
+function toggleCardFlip(element, event) {
+  if (event) event.stopPropagation();
+  const card = element.closest('.flip-card') || element.closest('.result-card') || element.closest('.lib-card') || element.closest('.agent-card');
+  if (card) {
+    card.classList.toggle('is-flipped');
+  }
+}
+
+function handleCardClick(card, event) {
+  // If the user clicked on a button, link, input, textarea, result box, or was selecting text, do not flip
+  if (event.target.closest('button, a, input, textarea, .result-box, .copy-btn, .cb-action, .cb-flip-btn, .cb-val')) {
+    return;
+  }
+  const selection = window.getSelection();
+  if (selection && selection.toString().length > 0) {
+    return;
+  }
+  card.classList.toggle('is-flipped');
+}
+
+function getCardBackHtml(contextTitle, subContext) {
+  const escTitle = esc(contextTitle);
+  const emailSubj = encodeURIComponent(`Inquiry: ${contextTitle}`);
+  const waMsg = encodeURIComponent(`Hi Shubham, I am inquiring about ${contextTitle} on ALEX Design Studio OS`);
+
+  return `
+    <div class="card-face card-back" onclick="event.stopPropagation()">
+      <div class="cb-header">
+        <span class="cb-badge">📇 DIRECT CONTACT</span>
+        <button type="button" class="cb-flip-btn" onclick="toggleCardFlip(this, event)">⤾ Flip</button>
+      </div>
+      <div class="cb-title">Shubham Kothavale</div>
+      <div class="cb-subtitle" title="${escTitle}">${escTitle}</div>
+
+      <div class="cb-channels">
+        <div class="cb-item">
+          <div class="cb-icon">✉️</div>
+          <div class="cb-meta">
+            <span class="cb-label">Email</span>
+            <a href="mailto:shubhamkothavale81@gmail.com?subject=${emailSubj}" class="cb-val" onclick="event.stopPropagation()">shubhamkothavale81@gmail.com</a>
+          </div>
+          <button type="button" class="cb-action" onclick="copyContactText('shubhamkothavale81@gmail.com', this, event)">Copy</button>
+        </div>
+
+        <div class="cb-item">
+          <div class="cb-icon">📞</div>
+          <div class="cb-meta">
+            <span class="cb-label">Phone &amp; WhatsApp</span>
+            <a href="tel:+917057539094" class="cb-val" onclick="event.stopPropagation()">+91 7057539094</a>
+          </div>
+          <div style="display:flex;gap:4px">
+            <a href="https://wa.me/917057539094?text=${waMsg}" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Chat</a>
+            <a href="tel:+917057539094" class="cb-action" onclick="event.stopPropagation()">Call</a>
+          </div>
+        </div>
+
+        <div class="cb-item">
+          <div class="cb-icon">💼</div>
+          <div class="cb-meta">
+            <span class="cb-label">LinkedIn</span>
+            <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">shubham-kothavale-b06089318</a>
+          </div>
+          <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+        </div>
+
+        <div class="cb-item">
+          <div class="cb-icon">📸</div>
+          <div class="cb-meta">
+            <span class="cb-label">Instagram</span>
+            <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-val" onclick="event.stopPropagation()">@shubham.kothavale0047</a>
+          </div>
+          <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="cb-action" onclick="event.stopPropagation()">Open ↗</a>
+        </div>
+      </div>
+
+      <button type="button" class="cb-flip-return" onclick="toggleCardFlip(this, event)">
+        ⤾ Return to Card Front
+      </button>
+    </div>
+  `;
+}
+
 // ── Contact Modal & Interaction Handlers ─────────────────────────────────────
 function openContactModal(context) {
   const ctx = $('modalContext');
@@ -1179,7 +1728,8 @@ function handleModalBackdropClick(e) {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeContactModal();
 });
-function copyContactText(text, btn) {
+function copyContactText(text, btn, event) {
+  if (event) event.stopPropagation();
   navigator.clipboard.writeText(text).then(() => {
     const orig = btn.textContent;
     btn.textContent = 'Copied ✓';
