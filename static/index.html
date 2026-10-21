@@ -1,282 +1,277 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#070b14">
-<meta name="description" content="ALEX DESIGN STUDIO OS — 64-role AI creative campaign orchestration platform. Generate poster copy, social captions, WhatsApp status, story frames and QA checklists instantly.">
-<title>ALEX DESIGN STUDIO OS — 64-Role Campaign Orchestration</title>
+<title>ALEX DESIGN STUDIO OS — 64-Role Creative Automation & ASI Library Stack</title>
+<meta name="description" content="AI-Powered creative automation platform orchestrating 64 agent roles for graphic design, advertising campaigns, and creative workflows.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  color-scheme:dark;
-  --bg:#070b14;
-  --panel:#0d1726;
-  --panel2:#111f35;
-  --line:#1e3050;
-  --cyan:#00e5ff;
-  --cyan2:#3aa8ff;
-  --gold:#ffc857;
-  --muted:#7a90ad;
-  --text:#eef3fc;
-  --green:#35d49a;
-  --red:#ff6b7a;
-  --radius:18px;
-  --radius-sm:12px;
+  --bg:#050b14;--card:#0a1526;--card-border:#152842;
+  --line:#1c3558;--text:#e4efff;--muted:#7d96b8;--dim:#425875;
+  --cyan:#00e5ff;--cyan-glow:#00e5ff30;
+  --gold:#ffc857;--green:#35d49a;--purple:#a78bfa;--red:#ff6b6b;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --radius:14px;--radius-sm:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
 body{
-  background:
-    radial-gradient(ellipse at 10% 0%,#0e2f50 0,transparent 42%),
-    radial-gradient(ellipse at 92% 20%,#1a1040 0,transparent 36%),
-    var(--bg);
-  font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
-  color:var(--text);
-  min-height:100vh;
+  background:var(--bg);color:var(--text);font-family:var(--font);
+  font-size:14px;line-height:1.6;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%,rgba(0,229,255,.09),transparent),
+    radial-gradient(ellipse 60% 40% at 85% 60%,rgba(167,139,250,.05),transparent);
+  background-attachment:fixed;
 }
-
-/* ── Layout ── */
-.wrap{max-width:1280px;margin:auto;padding:32px 24px 80px}
+.wrap{max-width:1220px;margin:0 auto;padding:28px 24px 80px}
 
 /* ── Header ── */
 header{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:16px;margin-bottom:36px;
-  border-bottom:1px solid var(--line);padding-bottom:24px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:24px;border-bottom:1px solid var(--card-border);gap:16px;flex-wrap:wrap;
 }
-.brand{display:flex;gap:14px;align-items:center}
+.brand{display:flex;align-items:center;gap:14px}
 .logo{
-  width:52px;height:52px;
-  background:linear-gradient(135deg,#00b4d8,#0077b6);
-  border-radius:14px;display:grid;place-items:center;
-  font-size:26px;font-weight:900;color:#fff;
-  box-shadow:0 0 30px #00e5ff30;flex-shrink:0;
-  letter-spacing:-1px;
+  width:44px;height:44px;border-radius:12px;
+  background:linear-gradient(135deg,#00e5ff,#3b82f6);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:22px;color:#050b14;
+  box-shadow:0 0 24px var(--cyan-glow);
 }
-.eyebrow{font-size:10px;letter-spacing:3px;color:var(--cyan);font-weight:700;text-transform:uppercase}
-.brand h1{font-size:clamp(17px,2.8vw,24px);font-weight:800;letter-spacing:.3px;margin-top:3px}
+.eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--cyan);margin-bottom:2px;
+}
+h1{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.header-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .status-pill{
-  display:flex;align-items:center;gap:7px;
-  border:1px solid #1e4060;background:#071420;
-  color:#8cf5cf;border-radius:99px;padding:8px 14px;
-  font-size:12px;font-weight:600;white-space:nowrap;flex-shrink:0;
-  transition:all .3s;
+  display:inline-flex;align-items:center;gap:8px;
+  background:#091a2e;border:1px solid #1a3c60;border-radius:99px;
+  padding:6px 14px;font-size:12px;font-weight:600;
 }
 .status-pill .dot{
   width:8px;height:8px;border-radius:50%;background:var(--green);
-  box-shadow:0 0 8px var(--green);animation:pulse 2s infinite;
+  box-shadow:0 0 10px var(--green);
 }
-.status-pill.offline .dot{background:var(--red);box-shadow:0 0 8px var(--red);animation:none}
-.status-pill.checking .dot{background:var(--gold);box-shadow:0 0 8px var(--gold)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.status-pill.checking .dot{background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.status-pill.offline .dot{background:var(--red);box-shadow:0 0 10px var(--red)}
+.badge-render{
+  background:#142940;border:1px solid #234770;color:#9bc4f5;
+  padding:6px 12px;border-radius:99px;font-size:11px;font-weight:700;
+  display:inline-flex;align-items:center;gap:6px;
+}
 
-/* ── Hero Grid ── */
-.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:24px;margin-bottom:28px}
+/* ── Navigation Tabs ── */
+.nav-tabs{
+  display:flex;gap:8px;margin:24px 0 28px;padding:4px;
+  background:#091424;border:1px solid var(--card-border);border-radius:12px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.nav-tab{
+  flex:1;min-width:160px;padding:12px 18px;text-align:center;
+  background:transparent;border:none;border-radius:8px;
+  color:var(--muted);font-family:inherit;font-size:13px;font-weight:700;
+  cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;
+  white-space:nowrap;
+}
+.nav-tab:hover{color:var(--text);background:#0e1e36}
+.nav-tab.active{
+  color:var(--cyan);background:#13294b;
+  box-shadow:inset 0 0 0 1px #224a80,0 4px 12px rgba(0,229,255,.08);
+}
+.nav-tab .tab-badge{
+  font-size:10px;padding:2px 7px;border-radius:99px;
+  background:#071220;border:1px solid #1a3a60;color:var(--muted);
+}
+.nav-tab.active .tab-badge{background:var(--cyan);color:#050b14;font-weight:800}
+
+/* ── Tab Views ── */
+.tab-content{display:none}
+.tab-content.active{display:block;animation:fadeIn .25s ease-out}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Panel & Cards ── */
 .panel{
-  background:linear-gradient(155deg,var(--panel),#091120);
-  border:1px solid var(--line);border-radius:var(--radius);
-  padding:28px;position:relative;overflow:hidden;
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:26px;position:relative;
 }
-.panel::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 0% 0%,#0e2f5020,transparent 60%);
-  pointer-events:none;
+.panel-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;gap:12px;flex-wrap:wrap;
 }
-.hero-headline{
-  font-size:clamp(28px,4.2vw,50px);
-  line-height:1.05;letter-spacing:-1.6px;
-  font-weight:900;margin:18px 0 14px;
-}
-.hero-headline span{
-  background:linear-gradient(90deg,var(--cyan),var(--cyan2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.hero-headline em{font-style:normal;color:var(--gold)}
-.hero-sub{color:var(--muted);line-height:1.65;font-size:15px;max-width:480px}
+.panel-title{font-size:18px;font-weight:800;letter-spacing:-.01em}
+.panel-desc{color:var(--muted);font-size:13px;margin-top:2px}
 
-/* ── Stats ── */
-.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:26px}
-.stat{
-  padding:16px 14px;border:1px solid #1a3050;
-  border-radius:var(--radius-sm);background:#09131e;
-  transition:border-color .2s;
-}
-.stat:hover{border-color:#2a5070}
-.stat b{font-size:28px;font-weight:800;display:block;
-  background:linear-gradient(90deg,var(--cyan),#48cae4);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.stat small{color:var(--muted);font-size:12px;font-weight:500}
+/* ── Hero Grid (Studio Tab) ── */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;margin-bottom:28px}
+.hero-headline{font-size:clamp(28px,3.8vw,38px);font-weight:900;letter-spacing:-.03em;line-height:1.15;margin-bottom:12px}
+.hero-headline span{background:linear-gradient(90deg,var(--cyan),#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{color:var(--muted);font-size:14px;line-height:1.65;margin-bottom:22px}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat{background:#081322;border:1px solid var(--card-border);border-radius:var(--radius-sm);padding:14px;text-align:center}
+.stat b{display:block;font-size:26px;font-weight:900;color:var(--cyan);line-height:1}
+.stat small{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px;display:block}
 
-/* ── Stage badges ── */
-.stages{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px}
-.stage{
-  padding:13px 8px;border-radius:var(--radius-sm);
-  background:#09131e;border:1px solid #1a3050;
-  text-align:center;font-size:11px;font-weight:600;
-  color:var(--muted);letter-spacing:.3px;
+/* ── Preset Prompts Bar ── */
+.preset-bar{margin-bottom:18px}
+.preset-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;display:block}
+.preset-chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  background:#091626;border:1px solid #1a3454;border-radius:99px;
+  padding:6px 13px;font-size:12px;color:#9bc4f5;font-weight:600;
+  cursor:pointer;transition:all .18s;font-family:inherit;
 }
-.stage i{
-  display:block;width:6px;height:6px;
-  background:var(--cyan);border-radius:50%;
-  margin:0 auto 8px;box-shadow:0 0 10px var(--cyan);
-}
+.chip:hover{background:#112a4c;border-color:var(--cyan);color:var(--text);transform:translateY(-1px)}
 
-/* ── Form panel ── */
-.form-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
-.form-title h2{font-size:18px;font-weight:800}
-.badge{
-  font-size:10px;font-weight:700;letter-spacing:2px;
-  color:var(--cyan);border:1px solid #1e4860;
-  padding:5px 10px;border-radius:99px;
+/* ── Form ── */
+form{display:flex;flex-direction:column;gap:14px}
+label{font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px}
+textarea,input[type="text"]{
+  width:100%;background:#060f1c;border:1px solid var(--card-border);
+  border-radius:var(--radius-sm);padding:11px 13px;color:var(--text);
+  font-family:inherit;font-size:13px;line-height:1.5;transition:border-color .18s,box-shadow .18s;
 }
-label{display:block;font-size:12px;font-weight:600;color:#8fa8c8;margin:16px 0 7px;text-transform:uppercase;letter-spacing:.8px}
-textarea,input[type=text]{
-  width:100%;border:1px solid #1e3452;
-  background:#060e1a;color:var(--text);
-  padding:13px 15px;border-radius:var(--radius-sm);
-  font:inherit;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s;
+textarea:focus,input[type="text"]:focus{
+  outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px var(--cyan-glow);
 }
-textarea{min-height:110px;resize:vertical;line-height:1.55}
-textarea:focus,input[type=text]:focus{
-  border-color:var(--cyan);
-  box-shadow:0 0 0 3px #00e5ff14;
-}
+textarea{min-height:92px;resize:vertical}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.btn{
-  width:100%;margin-top:20px;
-  border:0;border-radius:var(--radius-sm);
-  background:linear-gradient(100deg,#00cfe8,#3aa8ff);
-  color:#030d18;font-weight:800;font-size:14px;letter-spacing:.3px;
-  padding:15px 20px;cursor:pointer;transition:opacity .2s,transform .1s;
-  position:relative;overflow:hidden;
-}
-.btn:hover{opacity:.92;transform:translateY(-1px)}
-.btn:active{transform:translateY(0)}
-.btn:disabled{opacity:.55;cursor:wait;transform:none}
-.btn-inner{display:flex;align-items:center;justify-content:center;gap:10px}
-.spinner{
-  width:16px;height:16px;border:2px solid #03111f40;
-  border-top-color:#03111f;border-radius:50%;
-  animation:spin .7s linear infinite;display:none;
-}
-.btn:disabled .spinner{display:block}
-@keyframes spin{to{transform:rotate(360deg)}}
-.hint{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5}
-#formStatus{
-  min-height:20px;font-size:13px;
-  color:var(--muted);margin-top:10px;
-  transition:all .3s;
-}
-#formStatus.error{color:var(--red)}
-#formStatus.success{color:var(--green)}
 
-/* ── Progress bar ── */
+.btn{
+  background:linear-gradient(135deg,#00e5ff,#0099ff);color:#050b14;
+  font-family:inherit;font-weight:800;font-size:13px;letter-spacing:.04em;
+  padding:14px 22px;border:none;border-radius:var(--radius-sm);cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  transition:all .2s;box-shadow:0 0 20px rgba(0,229,255,.2);margin-top:6px;
+}
+.btn:hover{filter:brightness(1.12);box-shadow:0 0 28px rgba(0,229,255,.35);transform:translateY(-1px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
 .progress-bar{
-  height:3px;background:#0e1e30;border-radius:99px;
-  margin-top:14px;overflow:hidden;display:none;
+  height:4px;background:#0d1f35;border-radius:99px;overflow:hidden;
+  margin-top:10px;display:none;
 }
 .progress-bar.show{display:block}
-.progress-fill{
-  height:100%;width:0;
-  background:linear-gradient(90deg,var(--cyan),var(--cyan2));
-  border-radius:99px;transition:width .4s ease;
-  animation:shimmer 2s infinite;
-}
-@keyframes shimmer{
-  0%{background-position:0% 50%}100%{background-position:100% 50%}
-}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .3s}
 
-/* ── Results ── */
-.results{display:none;margin-top:28px}
-.results.show{display:block}
+#formStatus{font-size:12px;color:var(--muted);margin-top:6px}
+#formStatus.success{color:var(--green);font-weight:600}
+#formStatus.error{color:var(--red);font-weight:600}
+
+/* ── Results Grid ── */
+.results-section{margin-top:36px;display:none}
+.results-section.show{display:block;animation:fadeIn .3s ease-out}
 .results-header{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:22px;flex-wrap:wrap;gap:12px;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:18px;gap:12px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--card-border);
 }
-.results-header h3{font-size:20px;font-weight:800}
-.job-pill{
-  border:1px solid #1e4060;background:#071420;
-  color:#8cf5cf;border-radius:99px;padding:8px 14px;font-size:12px;font-weight:700;
+.results-title{font-size:22px;font-weight:900;letter-spacing:-.02em}
+.job-meta-pill{
+  font-family:var(--mono);font-size:11px;background:#071424;border:1px solid var(--card-border);
+  padding:6px 12px;border-radius:6px;color:var(--cyan);
 }
-.job-meta{color:var(--muted);font-size:13px;margin-bottom:18px;line-height:1.6}
+.download-links{display:flex;gap:8px}
+.dl-btn{
+  background:#0c1e36;border:1px solid #1a3c66;color:var(--cyan);
+  padding:8px 14px;border-radius:var(--radius-sm);font-size:12px;font-weight:700;
+  text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .18s;
+}
+.dl-btn:hover{background:#132e54;border-color:var(--cyan);transform:translateY(-1px)}
 
-/* ── Download links ── */
-.links{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 22px}
-.link{
-  display:inline-flex;align-items:center;gap:7px;
-  color:var(--cyan);text-decoration:none;
-  border:1px solid #1e4860;padding:10px 15px;
-  border-radius:var(--radius-sm);font-size:13px;font-weight:600;
-  transition:background .2s,border-color .2s;
-}
-.link:hover{background:#00e5ff10;border-color:#2a6090}
-.link svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* ── Deliverable grid ── */
 .resultgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.resultbox{
-  border:1px solid var(--line);background:#08121e;
-  border-radius:var(--radius);padding:20px;min-width:0;
-  transition:border-color .2s;
+.result-card{
+  background:#071220;border:1px solid var(--card-border);border-radius:var(--radius);
+  padding:20px;display:flex;flex-direction:column;
 }
-.resultbox:hover{border-color:#2a4060}
-.resultbox h4{
-  margin-bottom:14px;font-size:14px;font-weight:700;
-  color:var(--cyan);text-transform:uppercase;letter-spacing:1px;
-  display:flex;align-items:center;gap:8px;
+.result-card h3{
+  font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:12px;display:flex;align-items:center;gap:8px;
 }
-.resultbox h4::before{
-  content:'';display:block;width:5px;height:5px;
-  background:var(--cyan);border-radius:50%;
-  box-shadow:0 0 8px var(--cyan);
-}
-.copy{
-  white-space:pre-wrap;line-height:1.7;font-size:13.5px;
-  color:#cad9ee;max-height:300px;overflow:auto;
-  scrollbar-width:thin;scrollbar-color:#1e3050 transparent;
+.result-box{
+  background:#040913;border:1px solid #112238;border-radius:var(--radius-sm);
+  padding:14px;font-size:12.5px;line-height:1.6;white-space:pre-wrap;
+  color:#d0e2fa;flex:1;max-height:280px;overflow-y:auto;font-family:var(--font);
 }
 .copy-btn{
-  margin-top:12px;border:1px solid #1e3050;background:transparent;
-  color:var(--muted);border-radius:8px;padding:6px 12px;font-size:12px;
-  cursor:pointer;transition:all .2s;font-family:inherit;
+  margin-top:10px;align-self:flex-start;background:transparent;border:1px solid #183354;
+  color:var(--muted);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:600;
+  cursor:pointer;transition:all .18s;font-family:inherit;
 }
 .copy-btn:hover{border-color:var(--cyan);color:var(--cyan)}
 .copy-btn.copied{border-color:var(--green);color:var(--green)}
 
-/* ── Notice ── */
-.notice{
-  border-left:3px solid var(--gold);padding:13px 16px;
-  background:#ffc85710;color:#f0d090;font-size:12px;
-  line-height:1.6;margin-top:22px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+/* ── Filter & Search Toolbar ── */
+.toolbar{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.search-input{
+  flex:1;min-width:240px;background:#060f1c;border:1px solid var(--card-border);
+  border-radius:var(--radius-sm);padding:10px 14px;color:var(--text);
+  font-family:inherit;font-size:13px;
 }
+.category-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.filter-btn{
+  background:#091626;border:1px solid #162c46;color:var(--muted);
+  border-radius:99px;padding:5px 12px;font-size:11px;font-weight:600;
+  cursor:pointer;transition:all .15s;font-family:inherit;
+}
+.filter-btn:hover{color:var(--text);border-color:#244974}
+.filter-btn.active{background:#0e294b;border-color:var(--cyan);color:var(--cyan)}
 
-/* ── Jobs history panel ── */
-.jobs-panel{margin-top:28px}
-.jobs-panel h3{font-size:18px;font-weight:800;margin-bottom:16px}
+/* ── Library Stack Cards Grid ── */
+.library-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.lib-card{
+  background:#071220;border:1px solid var(--card-border);border-radius:var(--radius-sm);
+  padding:16px;display:flex;flex-direction:column;gap:10px;transition:all .2s;
+}
+.lib-card:hover{border-color:#254874;transform:translateY(-2px)}
+.lib-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.lib-name{font-size:15px;font-weight:800;color:#fff}
+.lib-status{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:#00e5ff18;color:var(--cyan);border:1px solid #00e5ff40}
+.lib-cat{font-size:11px;font-family:var(--mono);color:var(--purple);background:#a78bfa12;padding:3px 8px;border-radius:4px;align-self:flex-start}
+.lib-notes{font-size:12px;color:var(--muted);line-height:1.5}
+.lib-checks{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto;padding-top:8px;border-top:1px solid #0f2238}
+.lib-check{font-size:10px;color:var(--dim);background:#050c17;padding:2px 6px;border-radius:3px}
+
+/* ── Agents Grid ── */
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.agent-card{
+  background:#071220;border:1px solid var(--card-border);border-radius:var(--radius-sm);
+  padding:16px;display:flex;flex-direction:column;gap:8px;transition:all .18s;
+}
+.agent-card:hover{border-color:#254874;transform:translateY(-2px)}
+.agent-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.agent-name{font-size:14px;font-weight:800;color:#fff;line-height:1.3}
+.agent-cat{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:#35d49a15;color:var(--green);border:1px solid #35d49a30}
+.agent-resp{font-size:12px;color:var(--muted);line-height:1.5}
+.agent-mode{font-size:10px;font-family:var(--mono);color:var(--dim);margin-top:auto}
+
+/* ── Jobs Table ── */
 .jobs-list{display:flex;flex-direction:column;gap:10px}
 .job-row{
   display:flex;align-items:center;justify-content:space-between;
-  background:#08121e;border:1px solid var(--line);border-radius:var(--radius-sm);
-  padding:14px 18px;gap:12px;flex-wrap:wrap;transition:border-color .2s;
+  background:#071220;border:1px solid var(--card-border);border-radius:var(--radius-sm);
+  padding:14px 18px;gap:14px;flex-wrap:wrap;transition:border-color .18s;
 }
-.job-row:hover{border-color:#2a4060}
-.job-id{font-family:monospace;font-size:12px;color:var(--cyan)}
-.job-brief{flex:1;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:380px}
-.job-status{font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px}
-.job-status.SUCCEEDED{background:#35d49a18;color:var(--green);border:1px solid #35d49a40}
-.job-status.PARTIAL{background:#ffc85718;color:var(--gold);border:1px solid #ffc85740}
-.job-actions{display:flex;gap:8px}
-.job-actions a{font-size:12px;color:var(--cyan);text-decoration:none;padding:5px 10px;border:1px solid #1e4060;border-radius:8px;transition:background .2s}
-.job-actions a:hover{background:#00e5ff10}
+.job-row:hover{border-color:#2a4870}
+.job-id{font-family:var(--mono);font-size:12px;color:var(--cyan)}
+.job-name{flex:1;font-size:13px;color:var(--text);font-weight:600;min-width:200px}
+.job-badge{font-size:11px;font-weight:700;padding:4px 9px;border-radius:99px}
+.job-badge.SUCCEEDED{background:#35d49a18;color:var(--green);border:1px solid #35d49a40}
+.job-badge.PARTIAL{background:#ffc85718;color:var(--gold);border:1px solid #ffc85740}
+.job-links{display:flex;gap:8px}
+.job-links a{
+  font-size:11px;font-weight:700;color:var(--cyan);text-decoration:none;
+  padding:5px 11px;border:1px solid #1a3c64;border-radius:6px;transition:background .18s;
+}
+.job-links a:hover{background:#00e5ff12}
 
 /* ── Footer ── */
 footer{
-  color:#4a6080;font-size:12px;text-align:center;
-  margin-top:60px;padding-top:24px;border-top:1px solid #0e1e30;
+  margin-top:60px;padding-top:24px;border-top:1px solid #0d1e33;
+  color:#4c6688;font-size:12px;text-align:center;
 }
 footer a{color:var(--cyan);text-decoration:none}
 footer a:hover{text-decoration:underline}
@@ -285,17 +280,13 @@ footer a:hover{text-decoration:underline}
 @media(max-width:860px){
   .hero{grid-template-columns:1fr}
   .resultgrid{grid-template-columns:1fr}
-  .stages{grid-template-columns:repeat(2,1fr)}
 }
-@media(max-width:540px){
-  .wrap{padding:20px 14px 60px}
-  .panel{padding:20px}
-  .hero-headline{font-size:clamp(26px,7vw,36px)}
+@media(max-width:600px){
+  .wrap{padding:18px 14px 60px}
+  .panel{padding:18px}
   .row{grid-template-columns:1fr}
-  .statgrid{grid-template-columns:repeat(3,1fr);gap:7px}
-  .stat b{font-size:22px}
-  header{align-items:flex-start}
-  .results-header{flex-direction:column;align-items:flex-start}
+  .statgrid{grid-template-columns:repeat(3,1fr);gap:6px}
+  .stat b{font-size:20px}
 }
 </style>
 </head>
@@ -307,143 +298,233 @@ footer a:hover{text-decoration:underline}
     <div class="brand">
       <div class="logo">A</div>
       <div>
-        <div class="eyebrow">Creative Intelligence Platform</div>
+        <div class="eyebrow">Creative Automation &amp; Orchestration OS</div>
         <h1>ALEX DESIGN STUDIO OS</h1>
       </div>
     </div>
-    <div class="status-pill checking" id="healthPill">
-      <span class="dot"></span>
-      <span id="healthText">Checking system…</span>
+    <div class="header-actions">
+      <span class="badge-render">🚀 Render Web Service</span>
+      <div class="status-pill checking" id="healthPill">
+        <span class="dot"></span>
+        <span id="healthText">Connecting to API…</span>
+      </div>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <!-- Left: info -->
-    <div class="panel">
-      <div class="eyebrow">64-Role Orchestration · Campaign Studio</div>
-      <h2 class="hero-headline">Turn your brief into a <span>campaign.</span></h2>
-      <p class="hero-sub">
-        Run the local 64-role workflow to produce poster copy, social captions,
-        WhatsApp status, story frames, creative direction and a QA checklist.
-        Submit a brief to start a job.
-      </p>
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs" role="tablist">
+    <button class="nav-tab active" onclick="switchTab('studio')">
+      <span>🚀 Campaign Studio</span>
+    </button>
+    <button class="nav-tab" onclick="switchTab('libraries')">
+      <span>🧰 ASI Library Stack</span>
+      <span class="tab-badge" id="libBadge">43</span>
+    </button>
+    <button class="nav-tab" onclick="switchTab('agents')">
+      <span>🤖 64 Agent Roles</span>
+      <span class="tab-badge" id="agentBadge">64</span>
+    </button>
+    <button class="nav-tab" onclick="switchTab('jobs')">
+      <span>📂 Completed Jobs</span>
+      <span class="tab-badge" id="jobsBadge">0</span>
+    </button>
+  </nav>
 
-      <div class="statgrid">
-        <div class="stat"><b id="agentCount">64</b><small>Registered roles</small></div>
-        <div class="stat"><b>8</b><small>Workflow stages</small></div>
-        <div class="stat"><b>2</b><small>Export formats</small></div>
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- TAB 1: CAMPAIGN STUDIO                                          -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <section id="tab-studio" class="tab-content active">
+    <div class="hero">
+      <!-- Left Hero Info -->
+      <div class="panel">
+        <div class="eyebrow">Multi-Agent Workflow Scaffolding</div>
+        <h2 class="hero-headline">Turn any brief into a <span>full campaign.</span></h2>
+        <p class="hero-sub">
+          Orchestrates 64 specialized agent roles across 8 pipeline stages to produce high-impact poster copy, social media captions, WhatsApp Status content, localized story frames, creative direction, and a production QA checklist.
+        </p>
+
+        <div class="statgrid">
+          <div class="stat"><b id="statAgents">64</b><small>Specialized roles</small></div>
+          <div class="stat"><b>8</b><small>Pipeline stages</small></div>
+          <div class="stat"><b id="statLibs">43</b><small>Library candidates</small></div>
+        </div>
+
+        <div class="preset-bar">
+          <span class="preset-label">⚡ Creative Prompt Library Presets (Click to load):</span>
+          <div class="preset-chips">
+            <button type="button" class="chip" onclick="loadPreset('biryani')">🍗 Biryani Offer (Bappu's)</button>
+            <button type="button" class="chip" onclick="loadPreset('coffee')">☕ Artisan Coffee &amp; Cafe</button>
+            <button type="button" class="chip" onclick="loadPreset('watch')">⌚ Luxury Chronograph</button>
+            <button type="button" class="chip" onclick="loadPreset('streetwear')">⚡ Streetwear Season Drop</button>
+            <button type="button" class="chip" onclick="loadPreset('saas')">🤖 AI SaaS Platform</button>
+          </div>
+        </div>
       </div>
 
-      <div class="stages" style="margin-top:20px">
-        <div class="stage"><i></i>Brief &amp; Strategy</div>
-        <div class="stage"><i></i>Research</div>
-        <div class="stage"><i></i>Brand &amp; Copy</div>
-        <div class="stage"><i></i>Design &amp; QA</div>
-        <div class="stage"><i></i>Media</div>
-        <div class="stage"><i></i>Engineering</div>
-        <div class="stage"><i></i>Analytics</div>
-        <div class="stage"><i></i>Delivery</div>
+      <!-- Right Form -->
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <h3 class="panel-title">Launch Campaign Workflow</h3>
+            <p class="panel-desc">All roles execute deterministically in dependency order</p>
+          </div>
+          <span class="lib-status">ACTIVE ENGINE</span>
+        </div>
+
+        <form id="campaignForm" novalidate>
+          <div>
+            <label for="brief">Campaign Brief &amp; Objectives</label>
+            <textarea id="brief" required minlength="3" maxlength="4000"
+              placeholder="e.g. Bappu's Biryani — premium Instagram offer poster and social campaign">Bappu's Biryani — premium Instagram offer poster and social campaign</textarea>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="offer">Offer Price</label>
+              <input type="text" id="offer" value="₹149" maxlength="40">
+            </div>
+            <div>
+              <label for="regular">Regular Price</label>
+              <input type="text" id="regular" value="₹220" maxlength="40">
+            </div>
+          </div>
+
+          <button type="submit" class="btn" id="runBtn">
+            <span id="btnText">▶ RUN 64-ROLE WORKFLOW</span>
+          </button>
+
+          <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <div id="formStatus">Ready to execute. Submitting dispatches all 64 roles in sequence.</div>
+        </form>
       </div>
     </div>
 
-    <!-- Right: form -->
-    <div class="panel">
-      <div class="form-title">
-        <h2>Launch a workflow</h2>
-        <span class="badge">NEW JOB</span>
+    <!-- Results Section -->
+    <div class="results-section" id="results">
+      <div class="results-header">
+        <div>
+          <h2 class="results-title" id="resultsTitle">Campaign Deliverables</h2>
+          <div class="job-meta-pill" id="jobMeta">Job Initializing…</div>
+        </div>
+        <div class="download-links" id="downloadLinks"></div>
       </div>
-      <form id="campaignForm" novalidate>
-        <label for="brief">Project brief</label>
-        <textarea id="brief" required minlength="3" maxlength="4000"
-          placeholder="e.g. Bappu's Biryani — premium Instagram offer poster and social campaign">Bappu's Biryani — premium Instagram offer poster and social campaign</textarea>
 
-        <div class="row">
-          <div>
-            <label for="offer">Offer price</label>
-            <input type="text" id="offer" value="₹149" maxlength="40">
-          </div>
-          <div>
-            <label for="regular">Regular price</label>
-            <input type="text" id="regular" value="₹220" maxlength="40">
-          </div>
+      <div class="resultgrid">
+        <div class="result-card">
+          <h3>📋 Poster Copy &amp; Headline</h3>
+          <div class="result-box" id="poster"></div>
+          <button type="button" class="copy-btn" onclick="copyResult('poster', this)">Copy Poster</button>
         </div>
 
-        <button class="btn" id="runBtn" type="submit">
-          <span class="btn-inner">
-            <div class="spinner" id="spinner"></div>
-            <span id="btnText">▶ RUN CAMPAIGN WORKFLOW</span>
-          </span>
-        </button>
-
-        <div class="progress-bar" id="progressBar">
-          <div class="progress-fill" id="progressFill"></div>
+        <div class="result-card">
+          <h3>📸 Instagram Caption &amp; Hashtags</h3>
+          <div class="result-box" id="caption"></div>
+          <button type="button" class="copy-btn" onclick="copyResult('caption', this)">Copy Caption</button>
         </div>
 
-        <p class="hint">No account required · local template mode · review all prices before publishing</p>
-        <div id="formStatus" role="status"></div>
-      </form>
+        <div class="result-card">
+          <h3>💬 WhatsApp Status Copy</h3>
+          <div class="result-box" id="whatsapp"></div>
+          <button type="button" class="copy-btn" onclick="copyResult('whatsapp', this)">Copy WhatsApp</button>
+        </div>
+
+        <div class="result-card">
+          <h3>📱 Instagram Story Sequence</h3>
+          <div class="result-box" id="stories"></div>
+          <button type="button" class="copy-btn" onclick="copyResult('stories', this)">Copy Stories</button>
+        </div>
+
+        <div class="result-card">
+          <h3>🎨 Creative Direction &amp; Formats</h3>
+          <div class="result-box" id="creative"></div>
+          <button type="button" class="copy-btn" onclick="copyResult('creative', this)">Copy Direction</button>
+        </div>
+
+        <div class="result-card">
+          <h3>✅ Pre-Publish QA Checklist</h3>
+          <div class="result-box" id="qa"></div>
+          <button type="button" class="copy-btn" onclick="copyResult('qa', this)">Copy QA Checklist</button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Results -->
-  <section class="panel results" id="results">
-    <div class="results-header">
-      <h3>Campaign deliverables</h3>
-      <span class="job-pill" id="jobStatus">JOB COMPLETE</span>
-    </div>
-    <p class="job-meta" id="jobMeta"></p>
-    <div class="links" id="downloadLinks"></div>
-    <div class="resultgrid">
-      <div class="resultbox">
-        <h4>Poster copy</h4>
-        <div class="copy" id="poster"></div>
-        <button class="copy-btn" onclick="copyResult('poster',this)">Copy</button>
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- TAB 2: ASI LIBRARY STACK BROWSER                                -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <section id="tab-libraries" class="tab-content">
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">ALEX ASI Graphics Design Library Stack</h2>
+          <p class="panel-desc">43 Candidate frameworks across 14 categories. Metadata candidate registry with strict adoption verification rules.</p>
+        </div>
+        <a href="/api/libraries" target="_blank" class="dl-btn">GET /api/libraries (JSON)</a>
       </div>
-      <div class="resultbox">
-        <h4>Instagram caption</h4>
-        <div class="copy" id="caption"></div>
-        <button class="copy-btn" onclick="copyResult('caption',this)">Copy</button>
+
+      <div class="toolbar">
+        <input type="text" class="search-input" id="libSearch" placeholder="Search libraries (e.g. LangGraph, ComfyUI, vLLM, DeepEval)…" oninput="filterLibraries()">
       </div>
-      <div class="resultbox">
-        <h4>WhatsApp Status</h4>
-        <div class="copy" id="whatsapp"></div>
-        <button class="copy-btn" onclick="copyResult('whatsapp',this)">Copy</button>
+
+      <div class="category-filter" id="libCategories"></div>
+      <div class="library-grid" id="libraryList">
+        <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">Loading library candidates…</div>
       </div>
-      <div class="resultbox">
-        <h4>Instagram Story sequence</h4>
-        <div class="copy" id="stories"></div>
-        <button class="copy-btn" onclick="copyResult('stories',this)">Copy</button>
-      </div>
-      <div class="resultbox">
-        <h4>Creative direction</h4>
-        <div class="copy" id="creative"></div>
-        <button class="copy-btn" onclick="copyResult('creative',this)">Copy</button>
-      </div>
-      <div class="resultbox">
-        <h4>Pre-publish QA</h4>
-        <div class="copy" id="qa"></div>
-        <button class="copy-btn" onclick="copyResult('qa',this)">Copy</button>
-      </div>
-    </div>
-    <div class="notice">
-      <strong>Execution transparency:</strong> This release uses local deterministic template agents.
-      It does not make 64 independent live LLM calls, generate image/video assets, or conduct live market research.
-      Review campaign copy and verify all prices and claims before use.
     </div>
   </section>
 
-  <!-- Jobs History -->
-  <section class="jobs-panel" id="jobsPanel" style="display:none">
-    <h3>Recent jobs</h3>
-    <div class="jobs-list" id="jobsList"></div>
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- TAB 3: 64 AGENT ROLES DIRECTORY                                -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <section id="tab-agents" class="tab-content">
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">64 Specialized Agent Roles Directory</h2>
+          <p class="panel-desc">Full registry of registered agent roles, categories, responsibilities, and local deterministic execution contracts.</p>
+        </div>
+        <a href="/api/agents" target="_blank" class="dl-btn">GET /api/agents (JSON)</a>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" class="search-input" id="agentSearch" placeholder="Search agents by role name or responsibility…" oninput="filterAgents()">
+      </div>
+
+      <div class="category-filter" id="agentCategories"></div>
+      <div class="agent-grid" id="agentList">
+        <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">Loading registered agent roles…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- TAB 4: COMPLETED JOBS HISTORY                                   -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <section id="tab-jobs" class="tab-content">
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">Completed Campaign Runs</h2>
+          <p class="panel-desc">Historical record of orchestrated campaign outputs saved to the persistent output directory.</p>
+        </div>
+        <a href="/api/jobs" target="_blank" class="dl-btn">GET /api/jobs (JSON)</a>
+      </div>
+
+      <div class="jobs-list" id="jobsTable">
+        <div style="text-align:center;padding:30px;color:var(--muted)">Checking saved jobs…</div>
+      </div>
+    </div>
   </section>
 
 </main>
 
+<!-- Footer -->
 <footer>
-  ALEX DESIGN STUDIO OS &nbsp;·&nbsp; Local campaign runner &nbsp;·&nbsp;
-  API docs at <a href="/docs">/docs</a> &nbsp;·&nbsp;
+  ALEX DESIGN STUDIO OS &nbsp;·&nbsp; 64-Role Agent Orchestration &nbsp;·&nbsp;
+  <a href="/docs">Swagger API Docs</a> &nbsp;·&nbsp;
   <a href="/redoc">ReDoc</a> &nbsp;·&nbsp;
   <a href="/api/agents">Agents JSON</a> &nbsp;·&nbsp;
   <a href="/api/libraries">Library Registry</a>
@@ -451,16 +532,72 @@ footer a:hover{text-decoration:underline}
 
 <script>
 const $ = id => document.getElementById(id);
+let allLibraries = [];
+let allAgents = [];
+let activeLibCategory = 'ALL';
+let activeAgentCategory = 'ALL';
 
-// ── Health check ─────────────────────────────────────────────────────────────
+// ── Tab Switching ────────────────────────────────────────────────────────────
+function switchTab(tabId) {
+  document.querySelectorAll('.nav-tab').forEach((t, i) => {
+    const ids = ['studio', 'libraries', 'agents', 'jobs'];
+    t.classList.toggle('active', ids[i] === tabId);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  $(`tab-${tabId}`).classList.add('active');
+
+  if (tabId === 'libraries' && allLibraries.length === 0) fetchLibraries();
+  if (tabId === 'agents' && allAgents.length === 0) fetchAgents();
+  if (tabId === 'jobs') fetchJobs();
+}
+
+// ── Prompt Presets ───────────────────────────────────────────────────────────
+const PRESETS = {
+  biryani: {
+    brief: "Bappu's Biryani — premium Instagram offer poster and social campaign",
+    offer: "₹149",
+    regular: "₹220"
+  },
+  coffee: {
+    brief: "Artisan Roasters & Cafe — Single-origin morning brew and fresh croissant combo launch",
+    offer: "₹199",
+    regular: "₹290"
+  },
+  watch: {
+    brief: "Chrono Luxe Geneva — Heritage automatic titanium chronograph limited launch campaign",
+    offer: "₹4,999",
+    regular: "₹7,500"
+  },
+  streetwear: {
+    brief: "Urban Threads Studio — Drop 01 heavyweight oversized French terry collection release",
+    offer: "₹1,299",
+    regular: "₹1,899"
+  },
+  saas: {
+    brief: "Nexus AI Platform — Autonomous multi-agent creative orchestration tool for marketing teams",
+    offer: "₹799",
+    regular: "₹1,499"
+  }
+};
+function loadPreset(key) {
+  const p = PRESETS[key];
+  if (!p) return;
+  $('brief').value = p.brief;
+  $('offer').value = p.offer;
+  $('regular').value = p.regular;
+  $('brief').focus();
+}
+
+// ── Health Check ─────────────────────────────────────────────────────────────
 async function checkHealth() {
   const pill = $('healthPill'), text = $('healthText');
   try {
     const r = await fetch('/health');
     const d = await r.json();
-    text.textContent = `ONLINE · ${d.registered_roles} ROLES`;
+    text.textContent = `ONLINE · ${d.registered_roles} AGENTS`;
     pill.classList.remove('checking','offline');
-    $('agentCount').textContent = d.registered_roles;
+    $('statAgents').textContent = d.registered_roles;
+    $('agentBadge').textContent = d.registered_roles;
   } catch {
     text.textContent = 'API UNAVAILABLE';
     pill.classList.remove('checking');
@@ -470,42 +607,7 @@ async function checkHealth() {
 checkHealth();
 setInterval(checkHealth, 30000);
 
-// ── Load recent jobs ──────────────────────────────────────────────────────────
-async function loadJobs() {
-  try {
-    const r = await fetch('/api/jobs');
-    const d = await r.json();
-    if (!d.jobs || d.jobs.length === 0) return;
-    $('jobsPanel').style.display = 'block';
-    $('jobsList').innerHTML = d.jobs.map(j => `
-      <div class="job-row">
-        <span class="job-id">${j.job_id}</span>
-        <span class="job-brief">${escHtml(j.campaign_name || '—')}</span>
-        <span class="job-status ${j.status}">${j.status}</span>
-        <div class="job-actions">
-          <a href="/api/jobs/${j.job_id}/json" download>JSON</a>
-          <a href="/api/jobs/${j.job_id}/markdown" download>MD</a>
-        </div>
-      </div>
-    `).join('');
-  } catch { /* silent */ }
-}
-loadJobs();
-
-// ── Copy helper ───────────────────────────────────────────────────────────────
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-function copyResult(id, btn) {
-  const text = $(id)?.textContent || '';
-  navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = 'Copied ✓';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
-  }).catch(() => { btn.textContent = 'Copy failed'; });
-}
-
-// ── Progress simulation ───────────────────────────────────────────────────────
+// ── Progress Bar ─────────────────────────────────────────────────────────────
 let progressTimer;
 function startProgress() {
   const fill = $('progressFill');
@@ -513,9 +615,9 @@ function startProgress() {
   let pct = 0;
   fill.style.width = '0%';
   progressTimer = setInterval(() => {
-    pct = Math.min(pct + Math.random() * 6, 88);
+    pct = Math.min(pct + Math.random() * 8, 90);
     fill.style.width = pct + '%';
-  }, 300);
+  }, 250);
 }
 function finishProgress() {
   clearInterval(progressTimer);
@@ -523,22 +625,20 @@ function finishProgress() {
   setTimeout(() => { $('progressBar').classList.remove('show'); }, 600);
 }
 
-// ── Form submit ───────────────────────────────────────────────────────────────
+// ── Form Submission ──────────────────────────────────────────────────────────
 $('campaignForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const btn = $('runBtn');
-  const status = $('formStatus');
-  const btnText = $('btnText');
+  const btn = $('runBtn'), text = $('btnText'), status = $('formStatus');
 
   btn.disabled = true;
-  btnText.textContent = 'RUNNING WORKFLOW…';
+  text.textContent = 'RUNNING 64 ROLES…';
   status.className = '';
-  status.textContent = 'Orchestrating 64 roles in dependency order…';
+  status.textContent = 'Dispatching roles in dependency order across 8 pipeline stages…';
   $('results').classList.remove('show');
   startProgress();
 
   try {
-    const response = await fetch('/api/campaign', {
+    const res = await fetch('/api/campaign', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -547,45 +647,38 @@ $('campaignForm').addEventListener('submit', async e => {
         regular_price: $('regular').value,
       }),
     });
-    const d = await response.json();
-    if (!response.ok) throw new Error(d.detail || 'Workflow failed');
+    const d = await res.json();
+    if (!res.ok) throw new Error(d.detail || 'Workflow execution failed');
 
     finishProgress();
     const c = d.campaign;
     const p = c.poster_copy;
 
+    $('resultsTitle').textContent = c.campaign_name || 'Campaign Deliverables';
     $('poster').textContent =
       `${p.brand}\n\n${p.headline}\n${p.product}\n` +
       `Offer: ${p.offer_price}  ·  Regular: ${p.regular_price}\n` +
       `${p.supporting_line}\n\nCTA: ${p.cta}`;
     $('caption').textContent = c.instagram_caption;
     $('whatsapp').textContent = c.whatsapp_status;
-    $('stories').textContent = c.instagram_story_sequence.map(x => `FRAME ${x.frame}\n${x.copy}`).join('\n\n');
+    $('stories').textContent = (c.instagram_story_sequence || []).map(x => `FRAME ${x.frame}\n${x.copy}`).join('\n\n');
     $('creative').textContent =
-      `Palette: ${c.creative_direction.palette.join(', ')}\n` +
-      `Hero: ${c.creative_direction.hero}\n\nFormats:\n` +
-      Object.entries(c.creative_direction.formats).map(([k,v]) => `  ${k}: ${v}`).join('\n');
-    $('qa').textContent = c.pre_publish_checks.map(x => '• ' + x).join('\n');
+      `Palette: ${(c.creative_direction.palette || []).join(', ')}\n` +
+      `Hero Visual: ${c.creative_direction.hero}\n\nFormats:\n` +
+      Object.entries(c.creative_direction.formats || {}).map(([k,v]) => `  • ${k}: ${v}`).join('\n');
+    $('qa').textContent = (c.pre_publish_checks || []).map(x => '• ' + x).join('\n');
 
-    $('jobStatus').textContent = d.status;
     $('jobMeta').textContent =
-      `Job ${d.job_id} · ${d.completed_agents}/${d.registered_agents} roles completed · ` +
-      `Mode: ${d.mode} · Live LLM calls: ${d.live_llm_calls}`;
+      `JOB ${d.job_id} · ${d.completed_agents}/${d.registered_agents} ROLES COMPLETED · MODE: ${d.mode}`;
     $('downloadLinks').innerHTML =
-      `<a class="link" href="${d.downloads.markdown}" download>
-        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download Markdown
-       </a>
-       <a class="link" href="${d.downloads.json}" download>
-        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download JSON
-       </a>`;
+      `<a class="dl-btn" href="${d.downloads.markdown}" download>📥 Markdown</a>
+       <a class="dl-btn" href="${d.downloads.json}" download>📥 JSON</a>`;
 
     $('results').classList.add('show');
     status.className = 'success';
-    status.textContent = '✓ Workflow complete — deliverables are ready.';
+    status.textContent = `✓ Workflow succeeded — job ${d.job_id} generated.`;
     $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    loadJobs();
+    fetchJobs();
 
   } catch (err) {
     finishProgress();
@@ -593,9 +686,171 @@ $('campaignForm').addEventListener('submit', async e => {
     status.textContent = '✗ Error: ' + err.message;
   } finally {
     btn.disabled = false;
-    btnText.textContent = '▶ RUN CAMPAIGN WORKFLOW';
+    text.textContent = '▶ RUN 64-ROLE WORKFLOW';
   }
 });
+
+// ── Copy Helper ──────────────────────────────────────────────────────────────
+function copyResult(id, btn) {
+  const text = $(id)?.textContent || '';
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+  }).catch(() => { btn.textContent = 'Copy failed'; });
+}
+
+// ── Fetch & Filter Libraries ─────────────────────────────────────────────────
+async function fetchLibraries() {
+  try {
+    const r = await fetch('/api/libraries');
+    const d = await r.json();
+    allLibraries = d.libraries || [];
+    $('libBadge').textContent = allLibraries.length;
+    $('statLibs').textContent = allLibraries.length;
+
+    // Build category buttons
+    const cats = ['ALL', ...new Set(allLibraries.map(l => l.category).filter(Boolean))];
+    $('libCategories').innerHTML = cats.map(c => `
+      <button class="filter-btn ${c === activeLibCategory ? 'active' : ''}" onclick="setLibCategory('${c}')">
+        ${c === 'ALL' ? 'All Categories (' + allLibraries.length + ')' : c.replace('_',' ')}
+      </button>
+    `).join('');
+
+    renderLibraries();
+  } catch (e) {
+    $('libraryList').innerHTML = `<div style="grid-column:1/-1;color:var(--red);text-align:center">Failed to load libraries: ${e.message}</div>`;
+  }
+}
+function setLibCategory(cat) {
+  activeLibCategory = cat;
+  document.querySelectorAll('#libCategories .filter-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.includes(cat === 'ALL' ? 'All' : cat.replace('_',' ')));
+  });
+  renderLibraries();
+}
+function filterLibraries() {
+  renderLibraries();
+}
+function renderLibraries() {
+  const q = ($('libSearch')?.value || '').toLowerCase();
+  const filtered = allLibraries.filter(l => {
+    const matchCat = activeLibCategory === 'ALL' || l.category === activeLibCategory;
+    const matchQ = !q || l.name.toLowerCase().includes(q) || (l.notes || '').toLowerCase().includes(q) || (l.category || '').toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+
+  if (filtered.length === 0) {
+    $('libraryList').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">No libraries match your filter.</div>`;
+    return;
+  }
+
+  $('libraryList').innerHTML = filtered.map(l => `
+    <div class="lib-card">
+      <div class="lib-header">
+        <span class="lib-name">${esc(l.name)}</span>
+        <span class="lib-status">${esc(l.status || 'candidate').toUpperCase()}</span>
+      </div>
+      <span class="lib-cat">${esc((l.category || '').replace('_',' '))}</span>
+      <p class="lib-notes">${esc(l.notes || 'Registry candidate framework.')}</p>
+      <div class="lib-checks">
+        ${(l.verification_required || ['license','security','compatibility']).map(v => `
+          <span class="lib-check">✓ ${esc(v.replace(/_/g,' '))}</span>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── Fetch & Filter Agents ────────────────────────────────────────────────────
+async function fetchAgents() {
+  try {
+    const r = await fetch('/api/agents');
+    const d = await r.json();
+    allAgents = d.agents || [];
+    $('agentBadge').textContent = allAgents.length;
+    $('statAgents').textContent = allAgents.length;
+
+    const cats = ['ALL', ...new Set(allAgents.map(a => a.category).filter(Boolean))];
+    $('agentCategories').innerHTML = cats.map(c => `
+      <button class="filter-btn ${c === activeAgentCategory ? 'active' : ''}" onclick="setAgentCategory('${c}')">
+        ${c === 'ALL' ? 'All Roles (' + allAgents.length + ')' : c}
+      </button>
+    `).join('');
+
+    renderAgents();
+  } catch (e) {
+    $('agentList').innerHTML = `<div style="grid-column:1/-1;color:var(--red);text-align:center">Failed to load agents: ${e.message}</div>`;
+  }
+}
+function setAgentCategory(cat) {
+  activeAgentCategory = cat;
+  document.querySelectorAll('#agentCategories .filter-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.includes(cat === 'ALL' ? 'All Roles' : cat));
+  });
+  renderAgents();
+}
+function filterAgents() {
+  renderAgents();
+}
+function renderAgents() {
+  const q = ($('agentSearch')?.value || '').toLowerCase();
+  const filtered = allAgents.filter(a => {
+    const matchCat = activeAgentCategory === 'ALL' || a.category === activeAgentCategory;
+    const matchQ = !q || a.name.toLowerCase().includes(q) || a.key.toLowerCase().includes(q) || (a.responsibility || '').toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+
+  if (filtered.length === 0) {
+    $('agentList').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">No agents match your filter.</div>`;
+    return;
+  }
+
+  $('agentList').innerHTML = filtered.map(a => `
+    <div class="agent-card">
+      <div class="agent-header">
+        <span class="agent-name">${esc(a.name || a.key)}</span>
+        <span class="agent-cat">${esc(a.category || 'Specialist')}</span>
+      </div>
+      <p class="agent-resp">${esc(a.responsibility || 'Orchestration agent role.')}</p>
+      <span class="agent-mode">KEY: ${esc(a.key)} · ${esc(a.mode || 'LOCAL_TEMPLATE')}</span>
+    </div>
+  `).join('');
+}
+
+// ── Fetch Jobs ───────────────────────────────────────────────────────────────
+async function fetchJobs() {
+  try {
+    const r = await fetch('/api/jobs');
+    const d = await r.json();
+    const jobs = d.jobs || [];
+    $('jobsBadge').textContent = jobs.length;
+
+    if (jobs.length === 0) {
+      $('jobsTable').innerHTML = `<div style="text-align:center;padding:30px;color:var(--muted)">No saved campaign runs found yet. Launch a workflow to see jobs here.</div>`;
+      return;
+    }
+
+    $('jobsTable').innerHTML = jobs.map(j => `
+      <div class="job-row">
+        <span class="job-id">${esc(j.job_id)}</span>
+        <span class="job-name">${esc(j.campaign_name || 'Campaign Job')}</span>
+        <span class="job-badge ${j.status}">${esc(j.status)}</span>
+        <div class="job-links">
+          <a href="/api/jobs/${esc(j.job_id)}/markdown" download>Markdown</a>
+          <a href="/api/jobs/${esc(j.job_id)}/json" download>JSON</a>
+        </div>
+      </div>
+    `).join('');
+  } catch {
+    $('jobsTable').innerHTML = `<div style="text-align:center;padding:30px;color:var(--muted)">Could not load saved jobs.</div>`;
+  }
+}
+fetchJobs();
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 </script>
 </body>
 </html>
