@@ -434,6 +434,19 @@ alex_design_studio_os_agents_64/
 
 ---
 
+## Contact & Developer Support
+
+For inquiries, custom AI agent development, enterprise creative pipelines, or collaboration:
+
+- **Lead Developer**: Shubham Kothavale
+- **Email**: [shubhamkothavale81@gmail.com](mailto:shubhamkothavale81@gmail.com?subject=ALEX%20Design%20Studio%20OS%20Inquiry)
+- **Mobile**: [+91 7057539094](tel:+917057539094)
+- **WhatsApp**: [Chat on WhatsApp (+91 7057539094)](https://wa.me/917057539094?text=Hi%20Shubham,%20I%20am%20reaching%20out%20about%20ALEX%20Design%20Studio%20OS)
+- **LinkedIn**: [linkedin.com/in/shubham-kothavale-b06089318](https://www.linkedin.com/in/shubham-kothavale-b06089318)
+- **Instagram**: [@shubham.kothavale0047](https://www.instagram.com/shubham.kothavale0047)
+
+---
+
 ## Conclusion
 
 ALEX DESIGN STUDIO OS is a modular creative automation platform combining a responsive web dashboard, a 64-role workflow architecture, and a dependency-aware task orchestration engine. It provides a solid foundation for organizing advertising and design workflows and can be extended with live AI providers and production infrastructure as those components are implemented and verified.

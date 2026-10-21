@@ -276,6 +276,140 @@ footer{
 footer a{color:var(--cyan);text-decoration:none}
 footer a:hover{text-decoration:underline}
 
+/* ── Card Contact Buttons & Action Bars ── */
+.result-actions{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:12px;gap:8px;flex-wrap:wrap;
+}
+.card-contact-btn{
+  background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.28);
+  color:var(--cyan);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700;
+  cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:6px;
+  font-family:inherit;text-decoration:none;
+}
+.card-contact-btn:hover{
+  background:rgba(0,229,255,.22);border-color:var(--cyan);color:#fff;
+  transform:translateY(-1px);box-shadow:0 0 14px var(--cyan-glow);
+}
+.card-contact-strip{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  margin-top:auto;padding-top:10px;border-top:1px solid #0f2238;flex-wrap:wrap;
+}
+.card-contact-hint{font-size:10px;color:var(--dim)}
+
+/* ── Header Contact Button ── */
+.btn-contact-header{
+  background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(59,130,246,.25));
+  border:1px solid rgba(0,229,255,.5);color:var(--cyan);
+  padding:6px 14px;border-radius:99px;font-size:12px;font-weight:700;
+  cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:6px;
+  font-family:inherit;
+}
+.btn-contact-header:hover{
+  background:var(--cyan);color:#050b14;box-shadow:0 0 18px var(--cyan-glow);
+}
+
+/* ── Floating Contact Button ── */
+.floating-contact{
+  position:fixed;bottom:24px;right:24px;z-index:99;
+  display:flex;align-items:center;gap:8px;
+  background:#091930;border:1px solid var(--cyan);
+  box-shadow:0 8px 30px rgba(0,0,0,.6),0 0 20px var(--cyan-glow);
+  padding:10px 18px;border-radius:99px;color:#fff;
+  font-size:12.5px;font-weight:700;cursor:pointer;transition:all .2s;
+  font-family:inherit;
+}
+.floating-contact:hover{
+  background:var(--cyan);color:#050b14;transform:translateY(-2px);
+  box-shadow:0 12px 35px rgba(0,229,255,.45);
+}
+.floating-contact .pulse-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 10px var(--green);animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.4);opacity:.7}
+}
+
+/* ── Contact Modal ── */
+.modal-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(3,8,16,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;z-index:10000;padding:20px;
+}
+.modal-overlay.open{display:flex;animation:modalFadeIn .2s ease-out}
+@keyframes modalFadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{
+  background:#081426;border:1px solid #1c3d66;border-radius:18px;
+  max-width:540px;width:100%;padding:28px;position:relative;
+  box-shadow:0 24px 60px rgba(0,0,0,.7),0 0 40px rgba(0,229,255,.14);
+  animation:modalSlide .25s cubic-bezier(.16,1,.3,1);
+}
+@keyframes modalSlide{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{
+  position:absolute;top:16px;right:16px;background:transparent;border:none;
+  color:var(--muted);font-size:24px;cursor:pointer;line-height:1;padding:4px 8px;
+  border-radius:6px;transition:color .18s;
+}
+.modal-close:hover{color:#fff}
+.modal-title{font-size:20px;font-weight:900;letter-spacing:-.02em;margin-bottom:4px}
+.modal-context{
+  display:inline-block;font-size:11px;font-family:var(--mono);color:var(--cyan);
+  background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.25);padding:4px 10px;border-radius:6px;
+  margin-bottom:18px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.contact-grid{display:flex;flex-direction:column;gap:12px;margin-bottom:10px}
+.contact-card{
+  background:#050c18;border:1px solid #142a45;border-radius:10px;
+  padding:14px 16px;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;transition:all .18s;text-decoration:none;color:inherit;
+}
+.contact-card:hover{
+  border-color:var(--cyan);background:#0a1a30;transform:translateY(-1px);
+  box-shadow:0 4px 18px rgba(0,229,255,.12);
+}
+.contact-info{display:flex;align-items:center;gap:14px;min-width:0;flex:1}
+.contact-icon{
+  width:40px;height:40px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font-size:18px;flex-shrink:0;
+}
+.contact-icon.email{background:rgba(255,107,107,.15);color:#ff6b6b;border:1px solid rgba(255,107,107,.35)}
+.contact-icon.phone{background:rgba(53,212,154,.15);color:var(--green);border:1px solid rgba(53,212,154,.35)}
+.contact-icon.whatsapp{background:rgba(37,211,102,.15);color:#25d366;border:1px solid rgba(37,211,102,.35)}
+.contact-icon.linkedin{background:rgba(10,102,194,.15);color:#00a0dc;border:1px solid rgba(10,102,194,.35)}
+.contact-icon.insta{background:rgba(225,48,108,.15);color:#e1306c;border:1px solid rgba(225,48,108,.35)}
+.contact-meta{min-width:0;flex:1}
+.contact-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.contact-value{font-size:13px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.contact-action-btn{
+  background:#0e2440;border:1px solid #1f4572;color:var(--cyan);
+  padding:7px 13px;border-radius:6px;font-size:11px;font-weight:700;
+  text-decoration:none;cursor:pointer;transition:all .18s;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:5px;font-family:inherit;
+}
+.contact-action-btn:hover{background:var(--cyan);color:#050b14;border-color:var(--cyan)}
+.contact-action-btn.copied{background:var(--green);color:#050b14;border-color:var(--green)}
+
+/* ── Footer Contact Section ── */
+.footer-contact-banner{
+  background:#071324;border:1px solid #142a47;border-radius:14px;
+  padding:22px;margin:30px 0 20px;text-align:center;
+}
+.fc-title{font-size:15px;font-weight:800;color:#fff;margin-bottom:6px}
+.fc-subtitle{font-size:12px;color:var(--muted);margin-bottom:16px}
+.fc-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.fc-pill{
+  background:#0a1a30;border:1px solid #1b385e;color:#c0d8f8;
+  padding:8px 16px;border-radius:99px;font-size:12px;font-weight:600;
+  text-decoration:none;display:inline-flex;align-items:center;gap:7px;
+  transition:all .18s;
+}
+.fc-pill:hover{
+  background:rgba(0,229,255,.15);border-color:var(--cyan);color:#fff;
+  transform:translateY(-1px);box-shadow:0 0 12px var(--cyan-glow);
+}
+
 /* ── Responsive ── */
 @media(max-width:860px){
   .hero{grid-template-columns:1fr}
@@ -303,6 +437,9 @@ footer a:hover{text-decoration:underline}
       </div>
     </div>
     <div class="header-actions">
+      <button type="button" class="btn-contact-header" onclick="openContactModal('Header Action')">
+        💬 Contact Us
+      </button>
       <span class="badge-render">🚀 Render Web Service</span>
       <div class="status-pill checking" id="healthPill">
         <span class="dot"></span>
@@ -358,6 +495,11 @@ footer a:hover{text-decoration:underline}
             <button type="button" class="chip" onclick="loadPreset('streetwear')">⚡ Streetwear Season Drop</button>
             <button type="button" class="chip" onclick="loadPreset('saas')">🤖 AI SaaS Platform</button>
           </div>
+        </div>
+
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid #142842;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+          <span style="font-size:12px;color:var(--muted)">Need custom creative automation or custom agents?</span>
+          <button type="button" class="card-contact-btn" onclick="openContactModal('Campaign Studio Hero')">💬 Contact Us</button>
         </div>
       </div>
 
@@ -419,37 +561,55 @@ footer a:hover{text-decoration:underline}
         <div class="result-card">
           <h3>📋 Poster Copy &amp; Headline</h3>
           <div class="result-box" id="poster"></div>
-          <button type="button" class="copy-btn" onclick="copyResult('poster', this)">Copy Poster</button>
+          <div class="result-actions">
+            <button type="button" class="copy-btn" onclick="copyResult('poster', this)">Copy Poster</button>
+            <button type="button" class="card-contact-btn" onclick="openContactModal('Poster Copy Deliverable')">💬 Contact Us</button>
+          </div>
         </div>
 
         <div class="result-card">
           <h3>📸 Instagram Caption &amp; Hashtags</h3>
           <div class="result-box" id="caption"></div>
-          <button type="button" class="copy-btn" onclick="copyResult('caption', this)">Copy Caption</button>
+          <div class="result-actions">
+            <button type="button" class="copy-btn" onclick="copyResult('caption', this)">Copy Caption</button>
+            <button type="button" class="card-contact-btn" onclick="openContactModal('Instagram Caption Deliverable')">💬 Contact Us</button>
+          </div>
         </div>
 
         <div class="result-card">
           <h3>💬 WhatsApp Status Copy</h3>
           <div class="result-box" id="whatsapp"></div>
-          <button type="button" class="copy-btn" onclick="copyResult('whatsapp', this)">Copy WhatsApp</button>
+          <div class="result-actions">
+            <button type="button" class="copy-btn" onclick="copyResult('whatsapp', this)">Copy WhatsApp</button>
+            <button type="button" class="card-contact-btn" onclick="openContactModal('WhatsApp Status Deliverable')">💬 Contact Us</button>
+          </div>
         </div>
 
         <div class="result-card">
           <h3>📱 Instagram Story Sequence</h3>
           <div class="result-box" id="stories"></div>
-          <button type="button" class="copy-btn" onclick="copyResult('stories', this)">Copy Stories</button>
+          <div class="result-actions">
+            <button type="button" class="copy-btn" onclick="copyResult('stories', this)">Copy Stories</button>
+            <button type="button" class="card-contact-btn" onclick="openContactModal('Instagram Story Sequence Deliverable')">💬 Contact Us</button>
+          </div>
         </div>
 
         <div class="result-card">
           <h3>🎨 Creative Direction &amp; Formats</h3>
           <div class="result-box" id="creative"></div>
-          <button type="button" class="copy-btn" onclick="copyResult('creative', this)">Copy Direction</button>
+          <div class="result-actions">
+            <button type="button" class="copy-btn" onclick="copyResult('creative', this)">Copy Direction</button>
+            <button type="button" class="card-contact-btn" onclick="openContactModal('Creative Direction Deliverable')">💬 Contact Us</button>
+          </div>
         </div>
 
         <div class="result-card">
           <h3>✅ Pre-Publish QA Checklist</h3>
           <div class="result-box" id="qa"></div>
-          <button type="button" class="copy-btn" onclick="copyResult('qa', this)">Copy QA Checklist</button>
+          <div class="result-actions">
+            <button type="button" class="copy-btn" onclick="copyResult('qa', this)">Copy QA Checklist</button>
+            <button type="button" class="card-contact-btn" onclick="openContactModal('QA Checklist Deliverable')">💬 Contact Us</button>
+          </div>
         </div>
       </div>
     </div>
@@ -524,13 +684,111 @@ footer a:hover{text-decoration:underline}
 
 </main>
 
+<!-- Contact Us Modal -->
+<div class="modal-overlay" id="contactModal" onclick="handleModalBackdropClick(event)">
+  <div class="modal-box">
+    <button type="button" class="modal-close" onclick="closeContactModal()" title="Close">&times;</button>
+    <div class="eyebrow">Direct Contact &amp; Inquiries</div>
+    <h3 class="modal-title">Get In Touch</h3>
+    <div class="modal-context" id="modalContext">Inquiry regarding ALEX Design Studio OS</div>
+
+    <div class="contact-grid">
+      <!-- Email -->
+      <div class="contact-card">
+        <div class="contact-info">
+          <div class="contact-icon email">✉️</div>
+          <div class="contact-meta">
+            <div class="contact-label">Email Address</div>
+            <div class="contact-value" title="shubhamkothavale81@gmail.com">shubhamkothavale81@gmail.com</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button type="button" class="contact-action-btn" onclick="copyContactText('shubhamkothavale81@gmail.com', this)">Copy</button>
+          <a id="emailDirectLink" href="mailto:shubhamkothavale81@gmail.com?subject=ALEX%20Design%20Studio%20OS%20Inquiry" class="contact-action-btn" target="_blank" rel="noopener noreferrer">Send Email</a>
+        </div>
+      </div>
+
+      <!-- Mobile Call -->
+      <div class="contact-card">
+        <div class="contact-info">
+          <div class="contact-icon phone">📞</div>
+          <div class="contact-meta">
+            <div class="contact-label">Mobile Phone</div>
+            <div class="contact-value">+91 7057539094</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button type="button" class="contact-action-btn" onclick="copyContactText('7057539094', this)">Copy</button>
+          <a href="tel:+917057539094" class="contact-action-btn">Call Now</a>
+        </div>
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="contact-card">
+        <div class="contact-info">
+          <div class="contact-icon whatsapp">💬</div>
+          <div class="contact-meta">
+            <div class="contact-label">WhatsApp Direct</div>
+            <div class="contact-value">+91 7057539094</div>
+          </div>
+        </div>
+        <a id="whatsappLink" href="https://wa.me/917057539094?text=Hi%20Shubham,%20I%20am%20reaching%20out%20regarding%20ALEX%20Design%20Studio%20OS" class="contact-action-btn" target="_blank" rel="noopener noreferrer">Open Chat ↗</a>
+      </div>
+
+      <!-- LinkedIn -->
+      <div class="contact-card">
+        <div class="contact-info">
+          <div class="contact-icon linkedin">💼</div>
+          <div class="contact-meta">
+            <div class="contact-label">LinkedIn Profile</div>
+            <div class="contact-value">shubham-kothavale-b06089318</div>
+          </div>
+        </div>
+        <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" class="contact-action-btn" target="_blank" rel="noopener noreferrer">Connect ↗</a>
+      </div>
+
+      <!-- Instagram -->
+      <div class="contact-card">
+        <div class="contact-info">
+          <div class="contact-icon insta">📸</div>
+          <div class="contact-meta">
+            <div class="contact-label">Instagram Profile</div>
+            <div class="contact-value">@shubham.kothavale0047</div>
+          </div>
+        </div>
+        <a href="https://www.instagram.com/shubham.kothavale0047" class="contact-action-btn" target="_blank" rel="noopener noreferrer">Follow ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Contact Button -->
+<button type="button" class="floating-contact" onclick="openContactModal('Floating Trigger')" title="Contact Shubham Kothavale">
+  <span class="pulse-dot"></span>
+  <span>💬 Contact Us</span>
+</button>
+
 <!-- Footer -->
 <footer>
-  ALEX DESIGN STUDIO OS &nbsp;·&nbsp; 64-Role Agent Orchestration &nbsp;·&nbsp;
-  <a href="/docs">Swagger API Docs</a> &nbsp;·&nbsp;
-  <a href="/redoc">ReDoc</a> &nbsp;·&nbsp;
-  <a href="/api/agents">Agents JSON</a> &nbsp;·&nbsp;
-  <a href="/api/libraries">Library Registry</a>
+  <div class="footer-contact-banner">
+    <div class="fc-title">Connect with Shubham Kothavale</div>
+    <div class="fc-subtitle">AI Systems Architect &amp; Creative Technology · Developer of ALEX Design Studio OS</div>
+    <div class="fc-links">
+      <a href="mailto:shubhamkothavale81@gmail.com" class="fc-pill">✉️ shubhamkothavale81@gmail.com</a>
+      <a href="tel:+917057539094" class="fc-pill">📞 +91 7057539094</a>
+      <a href="https://wa.me/917057539094?text=Hi%20Shubham,%20reaching%20out%20about%20ALEX%20Design%20Studio%20OS" target="_blank" rel="noopener noreferrer" class="fc-pill">💬 WhatsApp</a>
+      <a href="https://www.linkedin.com/in/shubham-kothavale-b06089318" target="_blank" rel="noopener noreferrer" class="fc-pill">💼 LinkedIn</a>
+      <a href="https://www.instagram.com/shubham.kothavale0047" target="_blank" rel="noopener noreferrer" class="fc-pill">📸 Instagram</a>
+      <button type="button" class="fc-pill" style="cursor:pointer;background:#00e5ff18;border-color:var(--cyan);color:var(--cyan)" onclick="openContactModal('Footer Quick Action')">💬 Open Contact Card</button>
+    </div>
+  </div>
+  <div style="margin-top:20px">
+    ALEX DESIGN STUDIO OS &nbsp;·&nbsp; 64-Role Agent Orchestration &nbsp;·&nbsp;
+    <a href="/docs">Swagger API Docs</a> &nbsp;·&nbsp;
+    <a href="/redoc">ReDoc</a> &nbsp;·&nbsp;
+    <a href="/api/agents">Agents JSON</a> &nbsp;·&nbsp;
+    <a href="/api/libraries">Library Registry</a>
+  </div>
 </footer>
 
 <script>
@@ -774,6 +1032,10 @@ function renderLibraries() {
           <span class="lib-check">✓ ${esc(v.replace(/_/g,' '))}</span>
         `).join('')}
       </div>
+      <div class="card-contact-strip">
+        <button type="button" class="card-contact-btn" onclick="openContactModal('Library: ' + '${esc(l.name)}')">💬 Contact Us</button>
+        <span class="card-contact-hint">Inquire / Integrate</span>
+      </div>
     </div>
   `).join('');
 }
@@ -830,6 +1092,10 @@ function renderAgents() {
       </div>
       <p class="agent-resp">${esc(a.responsibility || 'Orchestration agent role.')}</p>
       <span class="agent-mode">KEY: ${esc(a.key)} · ${esc(a.mode || 'LOCAL_TEMPLATE')}</span>
+      <div class="card-contact-strip">
+        <button type="button" class="card-contact-btn" onclick="openContactModal('Agent Role: ' + '${esc(a.name || a.key)}')">💬 Contact Us</button>
+        <span class="card-contact-hint">Custom Role / Hire</span>
+      </div>
     </div>
   `).join('');
 }
@@ -856,6 +1122,7 @@ async function fetchJobs() {
           <button type="button" class="dl-btn" style="padding:5px 10px;cursor:pointer;font-family:inherit" onclick="loadJobIntoView('${esc(j.job_id)}')">Inspect</button>
           <a href="/api/jobs/${esc(j.job_id)}/markdown" download>Markdown</a>
           <a href="/api/jobs/${esc(j.job_id)}/json" download>JSON</a>
+          <button type="button" class="card-contact-btn" onclick="openContactModal('Completed Job: ' + '${esc(j.job_id)}')">💬 Contact Us</button>
         </div>
       </div>
     `).join('');
@@ -885,6 +1152,42 @@ async function loadJobIntoView(jobId) {
   } catch (err) {
     alert('Failed to load job details: ' + err.message);
   }
+}
+
+// ── Contact Modal & Interaction Handlers ─────────────────────────────────────
+function openContactModal(context) {
+  const ctx = $('modalContext');
+  if (ctx) ctx.textContent = context ? `Context: ${context}` : 'Inquiry regarding ALEX Design Studio OS';
+  const wa = $('whatsappLink');
+  if (wa) {
+    const msg = encodeURIComponent(`Hi Shubham, I am reaching out regarding ALEX Design Studio OS${context ? ' (' + context + ')' : ''}`);
+    wa.href = `https://wa.me/917057539094?text=${msg}`;
+  }
+  const emailLink = $('emailDirectLink');
+  if (emailLink) {
+    const subj = encodeURIComponent(`ALEX Design Studio OS Inquiry${context ? ' - ' + context : ''}`);
+    emailLink.href = `mailto:shubhamkothavale81@gmail.com?subject=${subj}`;
+  }
+  $('contactModal').classList.add('open');
+}
+function closeContactModal() {
+  $('contactModal').classList.remove('open');
+}
+function handleModalBackdropClick(e) {
+  if (e.target === $('contactModal')) closeContactModal();
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeContactModal();
+});
+function copyContactText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1800);
+  }).catch(() => {
+    alert('Contact copied: ' + text);
+  });
 }
 
 function esc(s) {

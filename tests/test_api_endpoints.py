@@ -57,10 +57,16 @@ def test_fastapi_http_endpoints_via_testclient():
     assert r_health.status_code == 200
     assert r_health.json()["status"] == "ok"
 
-    # HTML home
+    # HTML home & Contact Details verification
     r_home = client.get("/")
     assert r_home.status_code == 200
     assert "ALEX DESIGN STUDIO OS" in r_home.text
+    assert "Contact Us" in r_home.text
+    assert "shubhamkothavale81@gmail.com" in r_home.text
+    assert "7057539094" in r_home.text
+    assert "linkedin.com/in/shubham-kothavale-b06089318" in r_home.text
+    assert "instagram.com/shubham.kothavale0047" in r_home.text
+    assert "contactModal" in r_home.text
 
     # Agents list
     r_agents = client.get("/api/agents")
