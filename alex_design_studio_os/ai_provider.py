@@ -13,7 +13,8 @@ def generate_text(prompt: str, model: str | None = None) -> str:
     api_key = os.getenv("OPENAI_API_KEY", "").strip()
     if not api_key:
         raise AIProviderError(
-            "OPENAI_API_KEY is missing. Set it in your Termux session before using --mode openai."
+            "OPENAI_API_KEY environment variable is not set. "
+            "Add it to your Render environment variables or local .env file."
         )
     model = model or os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
     body = {
@@ -51,7 +52,7 @@ def generate_text(prompt: str, model: str | None = None) -> str:
             for part in item.get("content", []):
                 if part.get("type") == "output_text" and part.get("text"):
                     pieces.append(part["text"])
-    result = "\\n".join(pieces).strip()
+    result = "\n".join(pieces).strip()
     if not result:
         raise AIProviderError("OpenAI response contained no output_text.")
     return result

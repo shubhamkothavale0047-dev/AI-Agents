@@ -1,5 +1,6 @@
 """One-call AI workflow for a complete creative brief; requires a valid API key."""
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 from .ai_provider import generate_text
@@ -48,7 +49,7 @@ CLIENT BRIEF:
             "Review all client-facing copy, claims, licences, and prices before delivery."
         ],
     }
-    output_dir = Path("outputs")
+    output_dir = Path(os.getenv("ALEX_OUTPUT_DIR", "outputs"))
     output_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     output_path = output_dir / f"alex_ai_project_{stamp}.json"

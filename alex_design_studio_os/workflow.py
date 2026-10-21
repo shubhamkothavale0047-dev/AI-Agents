@@ -1,4 +1,5 @@
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 from .registry import create_all_agents
@@ -45,7 +46,7 @@ def run_core_pipeline(brief: str, brand_guidelines=None):
             "Human review is required before client delivery."
         ]
     }
-    output_dir = Path("outputs")
+    output_dir = Path(os.getenv("ALEX_OUTPUT_DIR", "outputs"))
     output_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     output_path = output_dir / f"alex_project_{stamp}.json"
